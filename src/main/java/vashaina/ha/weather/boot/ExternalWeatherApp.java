@@ -5,14 +5,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * Entry point for application.
+ * This application retrieves weather forecasts from external weather services such 
+ * as wunderground.com and weather.com.
  */
 @SpringBootApplication
-@ComponentScan("vashaina.ha.weather.controller")
+@ComponentScan("vashaina.ha.weather")
 public class ExternalWeatherApp {
 
     /**
-     * Main entrypoint method.
+     * Application main entrypoint method.
      * @param args
      */
     public static void main(String[] args) {
