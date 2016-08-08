@@ -3,6 +3,7 @@ package vashaina.ha.weather.service.wunderground;
 import org.springframework.stereotype.Service;
 
 import vashaina.ha.weather.domain.Forecast;
+import vashaina.ha.weather.domain.Temperature;
 import vashaina.ha.weather.service.ExternalWeatherService;
 
 /**
@@ -17,7 +18,7 @@ public class WundergroundWeatherService implements ExternalWeatherService {
     @Override
     public Forecast getTomorrowsHighTemp(int zip) {
         //TODO implement this method!!!
-        return new Forecast(105, zip);
+        return new Forecast(new Temperature(105, Temperature.Scale.FAHRENHEIT), zip);
     }
 
 }

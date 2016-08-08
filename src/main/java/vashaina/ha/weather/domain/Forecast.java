@@ -5,14 +5,14 @@ package vashaina.ha.weather.domain;
  */
 public class Forecast {
     private final int zip;
-    private final int highTemp;
+    private final Temperature highTemp;
 
     /**
      * Constructor.
      * @param highTemp
      * @param zip
      */
-    public Forecast(int highTemp, int zip) {
+    public Forecast(Temperature highTemp, int zip) {
         this.highTemp = highTemp;
         this.zip = zip;
     }
@@ -20,8 +20,8 @@ public class Forecast {
     /**
      * @return highest forecasted temperature for this forecast day.
      */
-    public int getHighTemp() {
-        return highTemp;
+    public String getHighTemp() {
+        return highTemp.toString();
     }
 
     /**
