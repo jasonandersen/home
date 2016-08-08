@@ -1,6 +1,7 @@
-package vashaina.ha.weather.boot;
+package vashaina.ha.weather;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * as wunderground.com and weather.com.
  */
 @SpringBootApplication
+@EnableAutoConfiguration
 @ComponentScan("vashaina.ha.weather")
 public class ExternalWeatherApp {
 

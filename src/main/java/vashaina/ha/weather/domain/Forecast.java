@@ -4,7 +4,9 @@ package vashaina.ha.weather.domain;
  * A weather forecast for a particular zip code.
  */
 public class Forecast {
+
     private final int zip;
+
     private final Temperature highTemp;
 
     /**
