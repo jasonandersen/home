@@ -1,4 +1,4 @@
-package vashaina.ha.weather.domain;
+package vashaina.ha.weather.ext.domain;
 
 /**
  * A single temperature data point.

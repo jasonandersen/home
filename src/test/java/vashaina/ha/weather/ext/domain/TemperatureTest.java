@@ -1,8 +1,10 @@
-package vashaina.ha.weather.domain;
+package vashaina.ha.weather.ext.domain;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import vashaina.ha.weather.ext.domain.Temperature;
 
 /**
  * Test the @{Temperature} class.
