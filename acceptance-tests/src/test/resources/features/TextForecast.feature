@@ -1,4 +1,4 @@
-Feature: Call an external weather service to retrieve a forecast
+Feature: Call an external weather service to retrieve a text forecast
 
     Background:
         Given today is "Monday"
@@ -15,9 +15,4 @@ Feature: Call an external weather service to retrieve a forecast
         And the source is "Wunderground.com"
         And the zip code is "98070"
         And there are no errors
-        
-    Scenario: Zip code with alphabetic characters
-        When I request a forecast for zip code "ABC"
-        Then I get an "InvalidZipCodeException" error
-        And the error message is "Zip code must be numeric"
         

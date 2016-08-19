@@ -1,17 +1,21 @@
-package vashaina.ha.weather.ext.domain;
+package vashaina.ha.weather.ext.cucumber;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import vashaina.ha.weather.ext.cucumber.TestContext;
-
 /**
  * Base class that all cucumber step definition classes should extend.
  */
 @ContextConfiguration(locations = { "classpath:features/cucumber.xml" })
 public abstract class BaseCucumberSteps {
+
+    protected static final String KEY_REQUEST_ZIP = "request.zipcode";
+    protected static final String KEY_WG_FORECAST_TODAY = "wunderground.response.forecast.today";
+    protected static final String KEY_WG_FORECAST_TONIGHT = "wunderground.response.forecast.tonight";
+    protected static final String KEY_WG_FORECAST_TOMORROW = "wunderground.response.forecast.tomorrow";
+    protected static final String KEY_WG_FORECAST_TOMORROW_NIGHT = "wunderground.response.forecast.tomorrow.night";
 
     private static final Logger log = LoggerFactory.getLogger(BaseCucumberSteps.class);
 

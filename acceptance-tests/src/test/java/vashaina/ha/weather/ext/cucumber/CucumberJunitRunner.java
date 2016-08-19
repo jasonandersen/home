@@ -1,4 +1,4 @@
-package vashaina.ha.weather.ext.domain;
+package vashaina.ha.weather.ext.cucumber;
 
 import org.junit.runner.RunWith;
 

@@ -7,18 +7,11 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import vashaina.ha.weather.ext.domain.BaseCucumberSteps;
 
 /**
  * Step definitions to call the ha-ext-weather-ws web service.
  */
 public class ServiceCallsStepDefs extends BaseCucumberSteps {
-
-    protected static final String KEY_REQUEST_ZIP = "request.zipcode";
-    protected static final String KEY_WG_FORECAST_TODAY = "wunderground.response.forecast.today";
-    protected static final String KEY_WG_FORECAST_TONIGHT = "wunderground.response.forecast.tonight";
-    protected static final String KEY_WG_FORECAST_TOMORROW = "wunderground.response.forecast.tomorrow";
-    protected static final String KEY_WG_FORECAST_TOMORROW_NIGHT = "wunderground.response.forecast.tomorrow.night";
 
     @SuppressWarnings("unused")
     @Given("^today is \"([^\"]*)\"$")
