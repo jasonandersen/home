@@ -5,12 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import vashaina.ha.service.virtual.ImposterFactory;
 import vashaina.ha.service.virtual.mountebank.Equals;
 import vashaina.ha.service.virtual.mountebank.Imposter;
 import vashaina.ha.service.virtual.mountebank.Is;
@@ -21,9 +17,7 @@ import vashaina.ha.service.virtual.mountebank.Stub;
 /**
  * Test the {@link ImposterFactory} class.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/application-context.xml" })
-public class ImposterFactoryTest {
+public class ImposterFactoryTest extends IntegrationTest {
 
     private static final String RESPONSE_BODY = "{\"ok\":\"hell yeah\"}";
 
@@ -67,7 +61,8 @@ public class ImposterFactoryTest {
     }
 
     private Stub loadFirstStub(int port, String path, String method, int responseStatus, String responseBody) {
-        Imposter imposter = factory.buildImposter(port, path, method, responseStatus, responseBody);
+        ServiceDoubleRequest request = new ServiceDoubleRequest(port, path, method, responseStatus, responseBody);
+        Imposter imposter = factory.buildImposter(request);
         assertNotNull(imposter);
         assertEquals(port, imposter.getPort());
         assertEquals("http", imposter.getProtocol());

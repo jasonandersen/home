@@ -3,6 +3,8 @@ package vashaina.ha.service.virtual;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import vashaina.ha.service.virtual.mountebank.Equals;
@@ -18,6 +20,8 @@ import vashaina.ha.service.virtual.mountebank.Stub;
 @Service
 public class ImposterFactory {
 
+    private static Logger log = LoggerFactory.getLogger(ImposterFactory.class);
+
     private static final String DEFAULT_PROTOCOL = "http";
 
     /**
@@ -29,9 +33,11 @@ public class ImposterFactory {
      * @param responseBody
      * @return 
      */
-    protected Imposter buildImposter(int port, String path, String method, int responseStatus, String responseBody) {
+    protected Imposter buildImposter(ServiceDoubleRequest request) {
+        log.debug("building imposter from request {}", request.toString());
+
         Imposter imposter = new Imposter();
-        imposter.setPort(port);
+        imposter.setPort(request.getPort());
         imposter.setProtocol(DEFAULT_PROTOCOL);
 
         //stubs
@@ -48,8 +54,8 @@ public class ImposterFactory {
 
         //is
         Is is = new Is();
-        is.setStatusCode(responseStatus);
-        is.setBody(responseBody);
+        is.setStatusCode(request.getResponseStatus());
+        is.setBody(request.getResponseBody());
         firstResponse.setIs(is);
 
         //predicates
@@ -60,8 +66,8 @@ public class ImposterFactory {
 
         //equals
         Equals equals = new Equals();
-        equals.setMethod(method);
-        equals.setPath(path);
+        equals.setMethod(request.getMethod());
+        equals.setPath(request.getPath());
         firstPredicate.setEquals(equals);
 
         return imposter;
