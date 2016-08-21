@@ -1,14 +1,20 @@
 package vashaina.ha.mountebank;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import vashaina.ha.mountebank.domain.Imposter;
+import vashaina.ha.mountebank.domain.Stub;
 
 /**
  * 
  */
 @Service
 public class ServiceVirtualizer {
+
+    private static final String DEFAULT_PROTOCOL = "http";
 
     /**
      * 
@@ -34,7 +40,11 @@ public class ServiceVirtualizer {
      * @return 
      */
     protected Imposter buildImposter(int port, String path, String method, int responseStatus, String responseBody) {
-        return null;
+        Imposter imposter = new Imposter();
+        imposter.setPort(port);
+        imposter.setProtocol(DEFAULT_PROTOCOL);
+        List<Stub> stubs = new ArrayList<>();
+        return imposter;
     }
 
     /**
