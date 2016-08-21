@@ -16,6 +16,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
+        "path",
+        "method",
         "body",
         "caseSensitive",
         "except",
@@ -24,6 +26,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public class Equals {
 
+    @JsonProperty("path")
+    private String path;
+    @JsonProperty("method")
+    private String method;
     @JsonProperty("body")
     private String body;
     @JsonProperty("caseSensitive")
@@ -34,6 +40,26 @@ public class Equals {
     private Json json;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonProperty("path")
+    public String getPath() {
+        return path;
+    }
+
+    @JsonProperty("path")
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    @JsonProperty("method")
+    public String getMethod() {
+        return method;
+    }
+
+    @JsonProperty("method")
+    public void setMethod(String method) {
+        this.method = method;
+    }
 
     @JsonProperty("body")
     public String getBody() {
