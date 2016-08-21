@@ -1,4 +1,4 @@
-package vashaina.ha.mountebank;
+package vashaina.ha.service.virtual;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import vashaina.ha.mountebank.domain.Equals;
-import vashaina.ha.mountebank.domain.Imposter;
-import vashaina.ha.mountebank.domain.Is;
-import vashaina.ha.mountebank.domain.Predicate;
-import vashaina.ha.mountebank.domain.Response;
-import vashaina.ha.mountebank.domain.Stub;
+import vashaina.ha.service.virtual.ImposterFactory;
+import vashaina.ha.service.virtual.mountebank.Equals;
+import vashaina.ha.service.virtual.mountebank.Imposter;
+import vashaina.ha.service.virtual.mountebank.Is;
+import vashaina.ha.service.virtual.mountebank.Predicate;
+import vashaina.ha.service.virtual.mountebank.Response;
+import vashaina.ha.service.virtual.mountebank.Stub;
 
 /**
  * Test the {@link ImposterFactory} class.

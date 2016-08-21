@@ -1,5 +1,5 @@
 
-package vashaina.ha.mountebank.domain;
+package vashaina.ha.service.virtual.mountebank;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,23 +16,36 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-        "selector"
+        "equals",
+        "inject"
 })
-public class Json {
+public class Predicate {
 
-    @JsonProperty("selector")
-    private String selector;
+    @JsonProperty("equals")
+    private Equals equals;
+    @JsonProperty("inject")
+    private String inject;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("selector")
-    public String getSelector() {
-        return selector;
+    @JsonProperty("equals")
+    public Equals getEquals() {
+        return equals;
     }
 
-    @JsonProperty("selector")
-    public void setSelector(String selector) {
-        this.selector = selector;
+    @JsonProperty("equals")
+    public void setEquals(Equals equals) {
+        this.equals = equals;
+    }
+
+    @JsonProperty("inject")
+    public String getInject() {
+        return inject;
+    }
+
+    @JsonProperty("inject")
+    public void setInject(String inject) {
+        this.inject = inject;
     }
 
     @JsonAnyGetter

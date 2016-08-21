@@ -1,5 +1,5 @@
 
-package vashaina.ha.mountebank.domain;
+package vashaina.ha.service.virtual.mountebank;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
 
 })
-public class Query_ {
+public class Query {
 
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();

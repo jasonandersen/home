@@ -1,24 +1,39 @@
 
-package vashaina.ha.mountebank.domain;
+package vashaina.ha.service.virtual.mountebank;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-
+        "matches"
 })
-public class Query {
+public class PredicateGenerator {
 
+    @JsonProperty("matches")
+    private Matches matches;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonProperty("matches")
+    public Matches getMatches() {
+        return matches;
+    }
+
+    @JsonProperty("matches")
+    public void setMatches(Matches matches) {
+        this.matches = matches;
+    }
 
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {

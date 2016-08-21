@@ -1,16 +1,16 @@
-package vashaina.ha.mountebank;
+package vashaina.ha.service.virtual;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import vashaina.ha.mountebank.domain.Equals;
-import vashaina.ha.mountebank.domain.Imposter;
-import vashaina.ha.mountebank.domain.Is;
-import vashaina.ha.mountebank.domain.Predicate;
-import vashaina.ha.mountebank.domain.Response;
-import vashaina.ha.mountebank.domain.Stub;
+import vashaina.ha.service.virtual.mountebank.Equals;
+import vashaina.ha.service.virtual.mountebank.Imposter;
+import vashaina.ha.service.virtual.mountebank.Is;
+import vashaina.ha.service.virtual.mountebank.Predicate;
+import vashaina.ha.service.virtual.mountebank.Response;
+import vashaina.ha.service.virtual.mountebank.Stub;
 
 /**
  * Builds {@link Imposter}s from {@link ServiceDoubleRequest}s.

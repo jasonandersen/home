@@ -1,5 +1,5 @@
 
-package vashaina.ha.mountebank.domain;
+package vashaina.ha.service.virtual.mountebank;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +21,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "body",
         "_mode"
 })
-public class Is {
+public class Response_ {
 
     @JsonProperty("statusCode")
     private Integer statusCode;
     @JsonProperty("headers")
-    private Headers headers;
+    private Headers__ headers;
     @JsonProperty("body")
     private String body;
     @JsonProperty("_mode")
@@ -35,7 +35,7 @@ public class Is {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("statusCode")
-    public int getStatusCode() {
+    public Integer getStatusCode() {
         return statusCode;
     }
 
@@ -45,12 +45,12 @@ public class Is {
     }
 
     @JsonProperty("headers")
-    public Headers getHeaders() {
+    public Headers__ getHeaders() {
         return headers;
     }
 
     @JsonProperty("headers")
-    public void setHeaders(Headers headers) {
+    public void setHeaders(Headers__ headers) {
         this.headers = headers;
     }
 

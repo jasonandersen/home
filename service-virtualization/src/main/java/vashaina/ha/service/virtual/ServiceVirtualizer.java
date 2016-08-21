@@ -1,14 +1,21 @@
-package vashaina.ha.mountebank;
+package vashaina.ha.service.virtual;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import vashaina.ha.mountebank.domain.Imposter;
+import vashaina.ha.service.virtual.mountebank.Imposter;
 
 /**
- * 
+ * Creates service test doubles.
  */
 @Service
 public class ServiceVirtualizer {
+
+    @Autowired
+    private ImposterFactory factory;
+
+    private RestTemplate restTemplate;
 
     /**
      * 
@@ -19,6 +26,8 @@ public class ServiceVirtualizer {
      * @param responseBody
      */
     public void createDouble(int port, String path, String method, int responseStatus, String responseBody) {
+        Imposter imposter = factory.buildImposter(port, path, method, responseStatus, responseBody);
+
         /*
         Imposter imposter = buildImposter(port, path, method, responseStatus, responseBody);
         String json = serializeImposter(imposter);

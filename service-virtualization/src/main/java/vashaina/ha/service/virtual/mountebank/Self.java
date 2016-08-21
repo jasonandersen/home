@@ -1,5 +1,5 @@
 
-package vashaina.ha.mountebank.domain;
+package vashaina.ha.service.virtual.mountebank;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,23 +16,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-        "self"
+        "href"
 })
-public class Links {
+public class Self {
 
-    @JsonProperty("self")
-    private Self self;
+    @JsonProperty("href")
+    private String href;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("self")
-    public Self getSelf() {
-        return self;
+    @JsonProperty("href")
+    public String getHref() {
+        return href;
     }
 
-    @JsonProperty("self")
-    public void setSelf(Self self) {
-        this.self = self;
+    @JsonProperty("href")
+    public void setHref(String href) {
+        this.href = href;
     }
 
     @JsonAnyGetter

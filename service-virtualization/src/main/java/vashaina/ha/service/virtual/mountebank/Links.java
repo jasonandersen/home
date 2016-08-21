@@ -1,9 +1,11 @@
 
-package vashaina.ha.mountebank.domain;
+package vashaina.ha.service.virtual.mountebank;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Generated;
+
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,33 +16,23 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-    "Location"
+        "self"
 })
-public class Headers {
+public class Links {
 
-    @JsonProperty("Location")
-    private String location;
+    @JsonProperty("self")
+    private Self self;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    /**
-     * 
-     * @return
-     *     The location
-     */
-    @JsonProperty("Location")
-    public String getLocation() {
-        return location;
+    @JsonProperty("self")
+    public Self getSelf() {
+        return self;
     }
 
-    /**
-     * 
-     * @param location
-     *     The Location
-     */
-    @JsonProperty("Location")
-    public void setLocation(String location) {
-        this.location = location;
+    @JsonProperty("self")
+    public void setSelf(Self self) {
+        this.self = self;
     }
 
     @JsonAnyGetter

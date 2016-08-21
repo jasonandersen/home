@@ -1,11 +1,9 @@
 
-package vashaina.ha.mountebank.domain;
+package vashaina.ha.service.virtual.mountebank;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.annotation.Generated;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,36 +14,33 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
-        "equals",
-        "inject"
+    "Location"
 })
-public class Predicate {
+public class Headers__ {
 
-    @JsonProperty("equals")
-    private Equals equals;
-    @JsonProperty("inject")
-    private String inject;
+    @JsonProperty("Location")
+    private String location;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("equals")
-    public Equals getEquals() {
-        return equals;
+    /**
+     * 
+     * @return
+     *     The location
+     */
+    @JsonProperty("Location")
+    public String getLocation() {
+        return location;
     }
 
-    @JsonProperty("equals")
-    public void setEquals(Equals equals) {
-        this.equals = equals;
-    }
-
-    @JsonProperty("inject")
-    public String getInject() {
-        return inject;
-    }
-
-    @JsonProperty("inject")
-    public void setInject(String inject) {
-        this.inject = inject;
+    /**
+     * 
+     * @param location
+     *     The Location
+     */
+    @JsonProperty("Location")
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @JsonAnyGetter

@@ -1,5 +1,5 @@
 
-package vashaina.ha.mountebank.domain;
+package vashaina.ha.service.virtual.mountebank;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Generated("org.jsonschema2pojo")
 @JsonPropertyOrder({
+        "timestamp",
         "requestFrom",
         "method",
         "path",
@@ -23,8 +24,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "headers",
         "body"
 })
-public class Request {
+public class Request_ {
 
+    @JsonProperty("timestamp")
+    private String timestamp;
     @JsonProperty("requestFrom")
     private String requestFrom;
     @JsonProperty("method")
@@ -32,13 +35,23 @@ public class Request {
     @JsonProperty("path")
     private String path;
     @JsonProperty("query")
-    private Query query;
+    private Query_ query;
     @JsonProperty("headers")
-    private Headers_ headers;
+    private Headers___ headers;
     @JsonProperty("body")
     private String body;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
+    @JsonProperty("timestamp")
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    @JsonProperty("timestamp")
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
     @JsonProperty("requestFrom")
     public String getRequestFrom() {
@@ -71,22 +84,22 @@ public class Request {
     }
 
     @JsonProperty("query")
-    public Query getQuery() {
+    public Query_ getQuery() {
         return query;
     }
 
     @JsonProperty("query")
-    public void setQuery(Query query) {
+    public void setQuery(Query_ query) {
         this.query = query;
     }
 
     @JsonProperty("headers")
-    public Headers_ getHeaders() {
+    public Headers___ getHeaders() {
         return headers;
     }
 
     @JsonProperty("headers")
-    public void setHeaders(Headers_ headers) {
+    public void setHeaders(Headers___ headers) {
         this.headers = headers;
     }
 
