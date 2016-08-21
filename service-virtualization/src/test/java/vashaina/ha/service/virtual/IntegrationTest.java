@@ -9,6 +9,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/service-virtualization-context.xml" })
-public class IntegrationTest {
+public abstract class IntegrationTest {
     //NOOP - just need the spring annotations
 }
