@@ -16,6 +16,7 @@ public abstract class BaseCucumberSteps {
     protected static final String KEY_WG_FORECAST_TONIGHT = "wunderground.response.forecast.tonight";
     protected static final String KEY_WG_FORECAST_TOMORROW = "wunderground.response.forecast.tomorrow";
     protected static final String KEY_WG_FORECAST_TOMORROW_NIGHT = "wunderground.response.forecast.tomorrow.night";
+    protected static final String KEY_SUT_RESPONSE = "wunderground.response";
 
     private static final Logger log = LoggerFactory.getLogger(BaseCucumberSteps.class);
 

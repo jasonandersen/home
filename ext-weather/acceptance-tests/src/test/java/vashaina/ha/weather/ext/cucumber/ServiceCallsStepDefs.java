@@ -2,6 +2,8 @@ package vashaina.ha.weather.ext.cucumber;
 
 import static org.junit.Assert.assertEquals;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
@@ -12,6 +14,9 @@ import cucumber.api.java.en.When;
  * Step definitions to call the ha-ext-weather-ws web service.
  */
 public class ServiceCallsStepDefs extends BaseCucumberSteps {
+
+    @Autowired
+    private ExternalWeatherGateway gateway;
 
     @SuppressWarnings("unused")
     @Given("^today is \"([^\"]*)\"$")
@@ -105,38 +110,41 @@ public class ServiceCallsStepDefs extends BaseCucumberSteps {
      * Submits request to the service.
      */
     private void submitRequest() {
+        WundergroundStub stub = buildStub();
+        ExternalWeatherResponse response = gateway.execute((String) get(KEY_REQUEST_ZIP), stub);
+        put(KEY_SUT_RESPONSE, response);
+    }
+
+    /**
+     * @return the wunderground stubbed out call
+     */
+    private WundergroundStub buildStub() {
         WundergroundStub stub = new WundergroundStub();
-        stub.setTodaysForecast(get(KEY_WG_FORECAST_TODAY));
-        stub.setTonightsForecast(get(KEY_WG_FORECAST_TONIGHT));
-        stub.setTomorrowsForecast(get(KEY_WG_FORECAST_TOMORROW));
-        stub.setTomorrowNightsForecast(get(KEY_WG_FORECAST_TOMORROW_NIGHT));
-        ExternalWeatherRequest request = new ExternalWeatherRequest();
-        request.setZipCode(get(KEY_REQUEST_ZIP));
-        request.setWundergroundStub(stub);
-        throw new UnsupportedOperationException("not implemented yet");
+        stub.setTodaysForecast((String) get(KEY_WG_FORECAST_TODAY));
+        stub.setTonightsForecast((String) get(KEY_WG_FORECAST_TONIGHT));
+        stub.setTomorrowsForecast((String) get(KEY_WG_FORECAST_TOMORROW));
+        stub.setTomorrowNightsForecast((String) get(KEY_WG_FORECAST_TOMORROW_NIGHT));
+        return stub;
     }
 
     /**
      * @return the forecast for today returned by the service
      */
     private String getActualTodaysForecast() {
-        //TODO implement
-        return null;
+        return getResponse().getTodaysForecast();
     }
 
     /**
      * @return the forecast for tomorrow returned by the service
      */
     private String getActualTomorrowsForecast() {
-        //TODO implement
-        return null;
+        return getResponse().getTomorrowsForecast();
     }
 
     /**
      * @return the source of the forecast returned by the service
      */
     private String getActualSource() {
-        //TODO implement
         return null;
     }
 
@@ -144,8 +152,14 @@ public class ServiceCallsStepDefs extends BaseCucumberSteps {
      * @return the zip code of the forecast request returned by the service
      */
     private String getActualZip() {
-        //TODO implement
         return null;
+    }
+
+    /**
+     * @return the external weather service call response
+     */
+    private ExternalWeatherResponse getResponse() {
+        return get(KEY_SUT_RESPONSE);
     }
 
 }

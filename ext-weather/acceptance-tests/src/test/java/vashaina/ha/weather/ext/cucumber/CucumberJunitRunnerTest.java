@@ -13,6 +13,6 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(format = { "pretty",
         "html:target/cucumber" }, features = "classpath:features/", snippets = SnippetType.CAMELCASE, glue = {
                 "vashaina.ha.weather.ext.cucumber", "cucumber.run.java.spring" })
-public class CucumberJunitRunner {
+public class CucumberJunitRunnerTest {
     //noop - just need the runner to execute the Cucumber classes
 }
