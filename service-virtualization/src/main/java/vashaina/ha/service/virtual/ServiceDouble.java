@@ -21,6 +21,7 @@ public class ServiceDouble {
     private final Imposter imposter;
 
     /**
+     * Constructor
      * @param imposter
      */
     public ServiceDouble(Imposter imposter) {
