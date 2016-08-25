@@ -33,4 +33,22 @@ public class WundergroundHostTest extends BaseIntegrationTest {
         assertEquals("http://api.wunderground.com", host.toString());
     }
 
+    @Test
+    public void testNoProtocol() {
+        host = new WundergroundHost("api.wunderground.com");
+        assertEquals("http://api.wunderground.com", host.toString());
+    }
+
+    @Test
+    public void testPort80() {
+        host = new WundergroundHost("api.wunderground.com", 80);
+        assertEquals("http://api.wunderground.com", host.toString());
+    }
+
+    @Test
+    public void testPort7575() {
+        host = new WundergroundHost("api.wunderground.com", 7575);
+        assertEquals("http://api.wunderground.com:7575", host.toString());
+    }
+
 }

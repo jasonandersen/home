@@ -14,18 +14,33 @@ import org.springframework.stereotype.Component;
 public class WundergroundHost {
 
     private static Logger log = LoggerFactory.getLogger(WundergroundHost.class);
+    private static final String PROTOCOL = "http://";
+    private static final int DEFAULT_PORT = 80;
 
     private final String host;
+    private final int port;
+
+    /**
+     * Constructor 
+     * @param host
+     */
+    public WundergroundHost(String host) {
+        this(host, DEFAULT_PORT);
+    }
 
     /**
      * Constructor
-     * @param host
+     * @param hostName
+     * @param hostPort
      */
     @Autowired
-    public WundergroundHost(@Value("${wunderground.host}") String host) {
+    public WundergroundHost(
+            @Value("${wunderground.host.name}") String host,
+            @Value("${wunderground.host.port}") int port) {
         Validate.notNull(host);
         this.host = trimTrailingSlashFromHost(host);
-        log.info("using Wunderground host {}", this.host);
+        this.port = port;
+        log.info("using Wunderground host {} on port {}", this.host, this.port);
     }
 
     /**
@@ -45,7 +60,9 @@ public class WundergroundHost {
      */
     @Override
     public String toString() {
-        return host;
+        String prefix = host.startsWith(PROTOCOL) ? "" : PROTOCOL;
+        String suffix = port == DEFAULT_PORT ? "" : ":" + port;
+        return prefix + host + suffix;
     }
 
 }
