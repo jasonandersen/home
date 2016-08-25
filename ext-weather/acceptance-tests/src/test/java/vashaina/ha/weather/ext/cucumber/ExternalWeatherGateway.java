@@ -2,6 +2,8 @@ package vashaina.ha.weather.ext.cucumber;
 
 import static org.junit.Assert.assertEquals;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import vashaina.ha.service.virtual.ServiceVirtualizer;
  */
 @Component
 public class ExternalWeatherGateway {
+
+    private static Logger log = LoggerFactory.getLogger(ExternalWeatherGateway.class);
 
     private static final int WG_PORT = 7575;
     private static final int RESPONSE_CODE = 200;
@@ -41,11 +45,23 @@ public class ExternalWeatherGateway {
      * @return the response from the external weather service
      */
     public ExternalWeatherResponse execute(String zip, WundergroundStub stub) {
-        setupServiceDouble(zip, stub);
-        String url = buildServiceUrl(zip);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        return new ExternalWeatherResponse(response.getBody(), response.getStatusCodeValue());
+        try {
+            setupServiceDouble(zip, stub);
+            String url = buildServiceUrl(zip);
+            log.info("calling external weather service at {}", url);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+            log.debug("{}: {}", responseEntity.getStatusCode().toString(), responseEntity.getBody());
+            ExternalWeatherResponse response = new ExternalWeatherResponse(
+                    responseEntity.getBody(), responseEntity.getStatusCodeValue());
+            return response;
+        } finally {
+            /*
+             * make sure we're tearing down our service doubles after execution!
+             */
+            virtualizer.clearAllDoubles();
+        }
+
     }
 
     /**
