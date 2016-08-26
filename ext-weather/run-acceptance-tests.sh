@@ -15,7 +15,7 @@ cd "$(dirname "$0")"
 echo ""
 echo "********** building ext-weather.jar **********"
 cd service
-mvn clean install -Dmaven.skip.tests=true
+mvn clean package -Dmaven.test.skip=true
 
 # build the container
 echo ""
@@ -24,7 +24,7 @@ docker build . -t ext-weather:latest
 
 # startup containers required for acceptance tests
 echo ""
-echo "********** booting up environment **********"
+echo "********** booting up acceptance testing environment **********"
 cd ..
 docker-compose -f docker-compose-at.yml up -d
 
