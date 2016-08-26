@@ -1,4 +1,4 @@
-# Servlet container for web services.
+# Container to run the ext-weather service.
 
 FROM oracle-jdk8
 
@@ -11,6 +11,6 @@ RUN groupadd -g 1000 service && \
 
 # Run as service user 
 USER ${user}
-COPY ext-weather-ws.jar ${EXTWEATHERWS_HOME}
+COPY target/ext-weather.jar ${EXTWEATHERWS_HOME}
 WORKDIR ${EXTWEATHERWS_HOME}
-ENTRYPOINT java -jar ext-weather-ws.jar
+ENTRYPOINT java -jar ext-weather.jar

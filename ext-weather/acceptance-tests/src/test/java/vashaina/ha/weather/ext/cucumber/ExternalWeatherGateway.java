@@ -6,6 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -49,9 +53,9 @@ public class ExternalWeatherGateway {
             setupServiceDouble(zip, stub);
             String url = buildServiceUrl(zip);
             log.info("calling external weather service at {}", url);
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
-            log.debug("{}: {}", responseEntity.getStatusCode().toString(), responseEntity.getBody());
+            ResponseEntity<String> responseEntity = callService(url);
+            log.debug("external weather response {}: {}",
+                    responseEntity.getStatusCode().toString(), responseEntity.getBody());
             ExternalWeatherResponse response = new ExternalWeatherResponse(
                     responseEntity.getBody(), responseEntity.getStatusCodeValue());
             return response;
@@ -62,6 +66,19 @@ public class ExternalWeatherGateway {
             virtualizer.clearAllDoubles();
         }
 
+    }
+
+    /**
+     * @param url
+     * @return a response entity from calling the URL
+     */
+    private ResponseEntity<String> callService(String url) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        HttpMethod verb = HttpMethod.GET;
+        return restTemplate.exchange(url, verb, request, String.class);
     }
 
     /**

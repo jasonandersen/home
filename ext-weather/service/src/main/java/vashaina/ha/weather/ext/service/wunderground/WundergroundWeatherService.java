@@ -1,5 +1,7 @@
 package vashaina.ha.weather.ext.service.wunderground;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
@@ -24,8 +26,9 @@ public class WundergroundWeatherService implements ExternalWeatherService {
      * Vashon forecast:
      * http://api.wunderground.com/api/APIKEY/forecast/q/98070.json
      */
-
     private static final String FORECAST_URL = "%1$s/api/%2$s/forecast/q/%3$s.json";
+
+    private static Logger log = LoggerFactory.getLogger(WundergroundWeatherService.class);
 
     private final ConversionService conversionService;
     private final RestTemplate restTemplate;
@@ -44,6 +47,7 @@ public class WundergroundWeatherService implements ExternalWeatherService {
         this.apiKey = apiKey;
         this.host = host;
         this.conversionService = conversionService;
+        log.info("WundergroundWeatherService started with host:{} and API key:{}", host.toString(), apiKey.toString());
     }
 
     /**

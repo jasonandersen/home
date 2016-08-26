@@ -1,10 +1,19 @@
 package vashaina.ha.weather.ext.service.wunderground;
 
+import java.io.IOException;
+
 import org.apache.commons.lang.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 
@@ -41,10 +50,38 @@ public class WundergroundForecastCommand extends HystrixCommand<WundergroundFore
     @Override
     protected WundergroundForecast run() throws Exception {
         log.debug("requesting wunderground forecast from {}", url);
-        ForecastResponse response = restTemplate.getForObject(url, ForecastResponse.class);
+        ForecastResponse response = deserialize(getForecastJson());
         WundergroundForecast forecast = new WundergroundForecast(response, url);
         log.debug("response received from wunderground API: {}", forecast.toString());
         return forecast;
+    }
+
+    /**
+     * @param forecastJson
+     * @return a forecast response deserialized from JSON
+     */
+    private ForecastResponse deserialize(String forecastJson) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        try {
+            return mapper.readValue(forecastJson, ForecastResponse.class);
+        } catch (IOException e) {
+            log.error("deserializing forecast response failed", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @return pure JSON
+     */
+    private String getForecastJson() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Accept", MediaType.APPLICATION_JSON_VALUE);
+        HttpEntity<String> request = new HttpEntity<>(headers);
+        log.debug("calling Wunderground URL {}", url);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+        log.debug("JSON response body {}", response.getBody());
+        return response.getBody();
     }
 
 }

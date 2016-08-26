@@ -45,7 +45,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
-        
         <!-- test dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -99,10 +98,11 @@
             <version>0.2.3</version>
             <scope>test</scope>
         </dependency>
-        
     </dependencies>
-
+    
+    <packaging>jar</packaging>
     <build>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
