@@ -16,7 +16,7 @@
 		"icon":"mostlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/mostlycloudy.gif",
 		"title":"Monday",
-		"fcttext":"${TODAYS_FORECAST}",
+		"fcttext":"Considerable cloudiness. Lows overnight in the mid 50s.",
 		"fcttext_metric":"Showers early. Low 14C.",
 		"pop":"20"
 		}
@@ -26,7 +26,7 @@
 		"icon":"nt_mostlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_mostlycloudy.gif",
 		"title":"Monday Night",
-		"fcttext":"${TONIGHTS_FORECAST}",
+		"fcttext":"Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable.",
 		"fcttext_metric":"Showers early with some clearing overnight. Thunder possible. Low 14C. Winds light and variable. Chance of rain 50%.",
 		"pop":"20"
 		}
@@ -36,7 +36,7 @@
 		"icon":"cloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/cloudy.gif",
 		"title":"Tuesday",
-		"fcttext":"${TOMORROWS_FORECAST}",
+		"fcttext":"Cloudy. Slight chance of a rain shower. High 71F. Winds SSW at 5 to 10 mph.",
 		"fcttext_metric":"Cloudy skies. Slight chance of a rain shower. High 21C. Winds SSW at 10 to 15 km/h.",
 		"pop":"20"
 		}
@@ -46,7 +46,7 @@
 		"icon":"nt_mostlycloudy",
 		"icon_url":"http://icons.wxug.com/i/c/k/nt_mostlycloudy.gif",
 		"title":"Tuesday Night",
-		"fcttext":"${TOMORROW_NIGHTS_FORECAST}",
+		"fcttext":"Mostly cloudy skies. Low 57F. Winds SSW at 5 to 10 mph.",
 		"fcttext_metric":"Considerable cloudiness. Low 14C. Winds SSW at 10 to 15 km/h.",
 		"pop":"10"
 		}

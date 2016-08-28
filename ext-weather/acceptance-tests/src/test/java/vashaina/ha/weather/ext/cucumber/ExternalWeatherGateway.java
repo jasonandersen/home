@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import vashaina.ha.service.virtual.ServiceDouble;
 import vashaina.ha.service.virtual.ServiceDoubleRequest;
 import vashaina.ha.service.virtual.ServiceVirtualizer;
+import vashaina.ha.weather.ext.wunderground.WundergroundDouble;
 
 /**
  * Proxies requests out to the ext-weather service, stubbing out the
@@ -48,7 +49,7 @@ public class ExternalWeatherGateway {
      * @param zip 
      * @return the response from the external weather service
      */
-    public ExternalWeatherResponse execute(String zip, WundergroundStub stub) {
+    public ExternalWeatherResponse execute(String zip, WundergroundDouble stub) {
         try {
             setupServiceDouble(zip, stub);
             String url = buildServiceUrl(zip);
@@ -65,7 +66,6 @@ public class ExternalWeatherGateway {
              */
             virtualizer.clearAllDoubles();
         }
-
     }
 
     /**
@@ -94,20 +94,12 @@ public class ExternalWeatherGateway {
      * @param stub
      * @return a properly built request for a service double
      */
-    private void setupServiceDouble(String zip, WundergroundStub stub) {
-        String path = buildWundergroundPath(zip);
+    private void setupServiceDouble(String zip, WundergroundDouble stub) {
+        String path = stub.getPath();
         String response = stub.getResponse();
         ServiceDoubleRequest request = new ServiceDoubleRequest(WG_PORT, path, HTTP_METHOD, RESPONSE_CODE, response);
         ServiceDouble serviceDouble = virtualizer.createDouble(request);
         assertEquals(path, serviceDouble.getPath());
-    }
-
-    /**
-     * @param zip
-     * @return the path portion of the wunderground API url
-     */
-    private String buildWundergroundPath(String zip) {
-        return String.format("/api/%s/forecast/q/%s.json", wundergroundApiKey, zip);
     }
 
 }

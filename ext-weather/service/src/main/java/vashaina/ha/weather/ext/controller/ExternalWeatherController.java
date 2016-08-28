@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vashaina.ha.weather.ext.domain.Forecast;
+import vashaina.ha.weather.ext.domain.ForecastResponse;
+import vashaina.ha.weather.ext.domain.ForecastResponse.Problem;
 import vashaina.ha.weather.ext.domain.ZipCode;
 import vashaina.ha.weather.ext.service.ExternalWeatherService;
 
@@ -28,15 +30,16 @@ public class ExternalWeatherController {
      * @return tomorrow's forecast
      */
     @RequestMapping("/forecast/{zip}")
-    public Forecast retrieveForecast(@PathVariable String zip) {
+    public ForecastResponse retrieveForecast(@PathVariable String zip) {
         log.info("retrieving forecast for zip {}", zip);
         try {
             ZipCode zipCode = new ZipCode(zip);
-            return weatherService.getForecast(zipCode);
+            Forecast forecast = weatherService.getForecast(zipCode);
+            return new ForecastResponse(forecast);
         } catch (Exception e) {
-            log.error("Error handling zip " + zip, e);
-            //TODO make this return something more interesting than null!!!
-            return null;
+            log.error("Error handling zip " + zip, e); //TODO <-- this probably doesn't need to be logged as error
+            Problem problem = new Problem(e.getClass().getSimpleName(), e.getMessage());
+            return new ForecastResponse(problem);
         }
     }
 }

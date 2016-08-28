@@ -46,7 +46,9 @@ public class Template {
     public String render() throws IOException {
         String output = readFileFromClasspath(templatePath);
         for (Entry<String, String> entry : values.entrySet()) {
-            output = output.replaceAll(getVariableRegEx(entry.getKey()), entry.getValue());
+            String variable = getVariableRegEx(entry.getKey());
+            String replacement = entry.getValue() == null ? entry.getKey() : entry.getValue();
+            output = output.replaceAll(variable, replacement);
         }
         return output;
     }

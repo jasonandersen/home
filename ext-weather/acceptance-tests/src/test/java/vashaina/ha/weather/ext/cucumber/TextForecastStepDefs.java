@@ -1,19 +1,21 @@
 package vashaina.ha.weather.ext.cucumber;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import vashaina.ha.weather.ext.wunderground.TemplatedStub;
+import vashaina.ha.weather.ext.wunderground.WundergroundDouble;
 
 /**
  * Step definitions to call the ha-ext-weather-ws web service.
  */
-public class ServiceCallsStepDefs extends BaseCucumberSteps {
+public class TextForecastStepDefs extends BaseCucumberSteps {
 
     @Autowired
     private ExternalWeatherGateway gateway;
@@ -81,20 +83,17 @@ public class ServiceCallsStepDefs extends BaseCucumberSteps {
 
     @Then("^there are no errors$")
     public void thereAreNoErrors() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        fail("not implemented yet");
     }
 
     @Then("^I get an \"([^\"]*)\" error$")
     public void iGetAnError(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        fail("not implemented yet");
     }
 
     @Then("^the error message is \"([^\"]*)\"$")
     public void theErrorMessageIs(String arg1) throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        fail("not implemented yet");
     }
 
     /**
@@ -110,16 +109,17 @@ public class ServiceCallsStepDefs extends BaseCucumberSteps {
      * Submits request to the service.
      */
     private void submitRequest() {
-        WundergroundStub stub = buildStub();
-        ExternalWeatherResponse response = gateway.execute((String) get(KEY_REQUEST_ZIP), stub);
+        String zip = get(KEY_REQUEST_ZIP);
+        WundergroundDouble stub = buildStub(zip);
+        ExternalWeatherResponse response = gateway.execute(zip, stub);
         put(KEY_SUT_RESPONSE, response);
     }
 
     /**
      * @return the wunderground stubbed out call
      */
-    private WundergroundStub buildStub() {
-        WundergroundStub stub = new WundergroundStub();
+    private WundergroundDouble buildStub(String zip) {
+        TemplatedStub stub = new TemplatedStub(zip);
         stub.setTodaysForecast((String) get(KEY_WG_FORECAST_TODAY));
         stub.setTonightsForecast((String) get(KEY_WG_FORECAST_TONIGHT));
         stub.setTomorrowsForecast((String) get(KEY_WG_FORECAST_TOMORROW));

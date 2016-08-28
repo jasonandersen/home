@@ -6,7 +6,6 @@ package vashaina.ha.weather.ext.domain;
 public class Forecast {
 
     private final String todaysForecast;
-
     private final String tomorrowsForecast;
 
     /**
