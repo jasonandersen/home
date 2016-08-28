@@ -61,10 +61,15 @@ public class WundergroundForecastCommand extends HystrixCommand<WundergroundFore
      * @return a forecast response deserialized from JSON
      */
     private ForecastResponse deserialize(String forecastJson) {
+        String json = forecastJson;
+        if (json == null) {
+            log.warn("forecast JSON response is null");
+            json = "";
+        }
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
-            return mapper.readValue(forecastJson, ForecastResponse.class);
+            return mapper.readValue(json, ForecastResponse.class);
         } catch (IOException e) {
             log.error("deserializing forecast response failed", e);
             throw new RuntimeException(e);

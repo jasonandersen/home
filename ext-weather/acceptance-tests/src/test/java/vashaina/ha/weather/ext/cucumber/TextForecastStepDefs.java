@@ -10,7 +10,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import vashaina.ha.weather.ext.wunderground.TemplatedStub;
-import vashaina.ha.weather.ext.wunderground.WundergroundDouble;
+import vashaina.ha.weather.ext.wunderground.WundergroundStub;
 
 /**
  * Step definitions to call the ha-ext-weather-ws web service.
@@ -110,15 +110,15 @@ public class TextForecastStepDefs extends BaseCucumberSteps {
      */
     private void submitRequest() {
         String zip = get(KEY_REQUEST_ZIP);
-        WundergroundDouble stub = buildStub(zip);
-        ExternalWeatherResponse response = gateway.execute(zip, stub);
+        WundergroundStub stub = buildStub(zip);
+        ExternalWeatherResponse response = gateway.executeFromZip(zip, stub);
         put(KEY_SUT_RESPONSE, response);
     }
 
     /**
      * @return the wunderground stubbed out call
      */
-    private WundergroundDouble buildStub(String zip) {
+    private WundergroundStub buildStub(String zip) {
         TemplatedStub stub = new TemplatedStub(zip);
         stub.setTodaysForecast((String) get(KEY_WG_FORECAST_TODAY));
         stub.setTonightsForecast((String) get(KEY_WG_FORECAST_TONIGHT));

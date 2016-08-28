@@ -9,7 +9,7 @@ Feature: ext-weather service
         Given this stubbed response:
             | verb     | GET                                                          |
             | url      | http://api.wunderground.com/api/APIKEY/forecast/q/98070.json |
-            | response | src/test/resources/data/wunderground/forecast/98070.json     |
+            | response | /data/wunderground/forecast/98070.json                       |
 
     Scenario: Happy path
         When this request is received:
@@ -21,12 +21,12 @@ Feature: ext-weather service
 """
 {
   "forecast": {
-    "todaysForecast":"Monday: Considerable cloudiness. Lows overnight in the mid 50s. Monday night: Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable.";
-    "tomorrowsForecast":"Tuesday: Cloudy. Slight chance of a rain shower. High 71F. Winds SSW at 5 to 10 mph. Tuesday night: Mostly cloudy skies. Low 57F. Winds SSW at 5 to 10 mph."
-    "source":"Wunderground.com"
+    "todaysForecast":"Monday: Considerable cloudiness. Lows overnight in the mid 50s. Monday night: Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable.",
+    "tomorrowsForecast":"Tuesday: Cloudy. Slight chance of a rain shower. High 71F. Winds SSW at 5 to 10 mph. Tuesday night: Mostly cloudy skies. Low 57F. Winds SSW at 5 to 10 mph.",
+    "source":"Wunderground.com",
     "zipCode":"98070"
-  }
-  "problem":{}
+  },
+  "problem":null
 }  
 """
 
@@ -39,7 +39,7 @@ Feature: ext-weather service
         And this response body is returned:
 """
 {
-    "forecast":{},
+    "forecast":null,
     "problem":{
         "type":"InvalidZipCodeException",
         "description":"zip code must be numeric"
@@ -56,7 +56,7 @@ Feature: ext-weather service
         And this response body is returned:
 """
 {
-    "forecast":{},
+    "forecast":null,
     "problem":{
         "type":"InvalidZipCodeException",
         "description":"zip code must be numeric"
@@ -73,7 +73,7 @@ Feature: ext-weather service
         And this response body is returned:
 """
 {
-    "forecast":{},
+    "forecast":null,
     "problem":{
         "type":"InvalidZipCodeException",
         "description":"zip code must be 5 digits"
@@ -90,7 +90,7 @@ Feature: ext-weather service
         And this response body is returned:
 """
 {
-    "forecast":{},
+    "forecast":null,
     "problem":{
         "type":"InvalidZipCodeException",
         "description":"zip code must be 5 digits"

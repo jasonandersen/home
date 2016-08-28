@@ -26,6 +26,13 @@ public class ExternalWeatherResponse {
     }
 
     /**
+     * @return the text of the response body
+     */
+    public String getResponseBody() {
+        return response;
+    }
+
+    /**
      * @return today's forecast from the response, will return a blank string if not found
      */
     public String getTodaysForecast() {

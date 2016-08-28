@@ -2,6 +2,8 @@ package vashaina.ha.weather.ext.domain;
 
 import org.apache.commons.lang.math.NumberUtils;
 
+import vashaina.ha.weather.ext.exception.InvalidZipCodeException;
+
 /**
  * Represents a USPS zip code.
  */
@@ -33,16 +35,16 @@ public class ZipCode {
      */
     private void validate(String candidate) {
         if (candidate == null) {
-            throw new IllegalArgumentException("zip code cannot be null");
+            throw new InvalidZipCodeException(candidate, "zip code cannot be null");
         }
         if (candidate.isEmpty()) {
-            throw new IllegalArgumentException("zip code cannot be empty");
+            throw new InvalidZipCodeException(candidate, "zip code cannot be empty");
         }
         if (!NumberUtils.isNumber(candidate)) {
-            throw new IllegalArgumentException("zip code must be numeric");
+            throw new InvalidZipCodeException(candidate, "zip code must be numeric");
         }
         if (candidate.length() != 5) {
-            throw new IllegalArgumentException("zip code must be 5 digits");
+            throw new InvalidZipCodeException(candidate, "zip code must be 5 digits");
         }
 
     }

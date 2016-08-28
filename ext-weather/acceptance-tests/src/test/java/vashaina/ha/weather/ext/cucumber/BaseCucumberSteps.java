@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 public abstract class BaseCucumberSteps {
 
     protected static final String KEY_REQUEST_ZIP = "request.zipcode";
+    protected static final String KEY_WG_STUB = "wunderground.stub";
     protected static final String KEY_WG_FORECAST_TODAY = "wunderground.response.forecast.today";
     protected static final String KEY_WG_FORECAST_TONIGHT = "wunderground.response.forecast.tonight";
     protected static final String KEY_WG_FORECAST_TOMORROW = "wunderground.response.forecast.tomorrow";

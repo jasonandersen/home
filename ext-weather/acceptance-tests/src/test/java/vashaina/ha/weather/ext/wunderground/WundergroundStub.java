@@ -3,7 +3,7 @@ package vashaina.ha.weather.ext.wunderground;
 /**
  * Specifies a service double for calls to the Wunderground API.
  */
-public interface WundergroundDouble {
+public interface WundergroundStub {
 
     /**
      * @return the expected path

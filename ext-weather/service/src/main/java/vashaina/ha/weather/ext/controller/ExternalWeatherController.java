@@ -3,14 +3,19 @@ package vashaina.ha.weather.ext.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 import vashaina.ha.weather.ext.domain.Forecast;
 import vashaina.ha.weather.ext.domain.ForecastResponse;
 import vashaina.ha.weather.ext.domain.ForecastResponse.Problem;
 import vashaina.ha.weather.ext.domain.ZipCode;
+import vashaina.ha.weather.ext.exception.ExternalWeatherServiceException;
 import vashaina.ha.weather.ext.service.ExternalWeatherService;
 
 /**
@@ -28,18 +33,22 @@ public class ExternalWeatherController {
     /**
      * @param zip
      * @return tomorrow's forecast
+     * @throws Exception 
      */
     @RequestMapping("/forecast/{zip}")
-    public ForecastResponse retrieveForecast(@PathVariable String zip) {
+    public ForecastResponse retrieveForecast(@PathVariable String zip) throws Exception {
         log.info("retrieving forecast for zip {}", zip);
-        try {
-            ZipCode zipCode = new ZipCode(zip);
-            Forecast forecast = weatherService.getForecast(zipCode);
-            return new ForecastResponse(forecast);
-        } catch (Exception e) {
-            log.error("Error handling zip " + zip, e); //TODO <-- this probably doesn't need to be logged as error
-            Problem problem = new Problem(e.getClass().getSimpleName(), e.getMessage());
-            return new ForecastResponse(problem);
-        }
+        ZipCode zipCode = new ZipCode(zip);
+        Forecast forecast = weatherService.getForecast(zipCode);
+        return new ForecastResponse(forecast);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ForecastResponse> error(WebRequest request, ExternalWeatherServiceException e) {
+        String requestUrl = request.getDescription(true);
+        log.error("There was an error handling a request for external weather: " + requestUrl, e);
+        Problem problem = new Problem(e.getClass().getSimpleName(), e.getMessage());
+        ForecastResponse response = new ForecastResponse(problem);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

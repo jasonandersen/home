@@ -7,9 +7,10 @@ import java.util.Map;
 import vashaina.ha.weather.ext.test.Template;
 
 /**
- * Creates a stubbed response from Wunderground.com.
+ * Creates a stubbed response from Wunderground.com using a template and
+ * replacing different parts of the response with values from the scenario.
  */
-public class TemplatedStub implements WundergroundDouble {
+public class TemplatedStub implements WundergroundStub {
 
     private static final String FORECAST_TEMPLATE = "data/wunderground/forecast/template.json";
 
@@ -26,7 +27,7 @@ public class TemplatedStub implements WundergroundDouble {
     }
 
     /**
-     * @see vashaina.ha.weather.ext.wunderground.WundergroundDouble#getResponse()
+     * @see vashaina.ha.weather.ext.wunderground.WundergroundStub#getResponse()
      */
     @Override
     public String getResponse() {
@@ -39,7 +40,7 @@ public class TemplatedStub implements WundergroundDouble {
     }
 
     /**
-     * @see vashaina.ha.weather.ext.wunderground.WundergroundDouble#getUrl()
+     * @see vashaina.ha.weather.ext.wunderground.WundergroundStub#getUrl()
      */
     @Override
     public String getPath() {

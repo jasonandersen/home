@@ -5,6 +5,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import vashaina.ha.weather.ext.exception.InvalidZipCodeException;
+
 /**
  * Test the validation in the {@link ZipCode} class.
  */
@@ -42,7 +44,7 @@ public class ZipCodeTest {
         try {
             zip = new ZipCode(arg);
             fail("no exception was thrown");
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidZipCodeException e) {
             assertEquals(expectedErrorMessage, e.getMessage());
         }
     }
