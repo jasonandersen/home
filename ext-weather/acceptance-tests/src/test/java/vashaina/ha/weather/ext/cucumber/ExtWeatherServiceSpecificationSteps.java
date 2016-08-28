@@ -38,7 +38,7 @@ public class ExtWeatherServiceSpecificationSteps extends BaseCucumberSteps {
         put(KEY_SUT_RESPONSE, response);
     }
 
-    @Then("^a \"([^\"]*)\" status code is returned$")
+    @Then("^a status code ([^\"]*) is returned$")
     public void aStatusCodeIsReturned(int code) throws Throwable {
         ExternalWeatherResponse response = get(KEY_SUT_RESPONSE);
         assertEquals(code, response.getStatusCode());

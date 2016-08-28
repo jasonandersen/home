@@ -2,7 +2,9 @@
 # 
 # Jason Andersen
 # 2016.08.27
-Feature: ext-weather service
+@SmokeTest
+@ServiceTest
+Feature: ext-weather service specification
 
     # Stub out the call to the Wunderground API
     Background:
@@ -16,7 +18,7 @@ Feature: ext-weather service
             | verb          | GET                       |
             | path          | /weather/forecast/98070   |
             | header        | Accept: application/json  |
-        Then a "200" status code is returned
+        Then a status code 200 is returned
         And this response body is returned:
 """
 {
@@ -35,7 +37,7 @@ Feature: ext-weather service
             | verb          | GET                       |
             | path          | /weather/forecast/ABC     |
             | header        | Accept: application/json  |
-        Then a "400" status code is returned
+        Then a status code 400 is returned
         And this response body is returned:
 """
 {
@@ -52,7 +54,7 @@ Feature: ext-weather service
             | verb          | GET                       |
             | path          | /weather/forecast/a1b2c   |
             | header        | Accept: application/json  |
-        Then a "400" status code is returned
+        Then a status code 400 is returned
         And this response body is returned:
 """
 {
@@ -69,7 +71,7 @@ Feature: ext-weather service
             | verb          | GET                       |
             | path          | /weather/forecast/980700  |
             | header        | Accept: application/json  |
-        Then a "400" status code is returned
+        Then a status code 400 is returned
         And this response body is returned:
 """
 {
@@ -86,7 +88,7 @@ Feature: ext-weather service
             | verb          | GET                          |
             | path          | /weather/forecast/98070-1234 |
             | header        | Accept: application/json     |
-        Then a "400" status code is returned
+        Then a status code 400 is returned
         And this response body is returned:
 """
 {
