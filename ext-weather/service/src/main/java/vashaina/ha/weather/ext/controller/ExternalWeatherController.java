@@ -43,10 +43,17 @@ public class ExternalWeatherController {
         return new ForecastResponse(forecast);
     }
 
+    /**
+     * Handle recoverable exceptions that extend from {@link ExternalWeatherServiceException}.
+     * @param request
+     * @param e
+     * @return a response containing a description of the problem
+     */
     @ExceptionHandler
     public ResponseEntity<ForecastResponse> error(WebRequest request, ExternalWeatherServiceException e) {
         String requestUrl = request.getDescription(true);
-        log.error("There was an error handling a request for external weather: " + requestUrl, e);
+        log.warn("There was an exception processing a request {}, type: {} description:{} ",
+                requestUrl, e.getClass().getSimpleName(), e.getMessage());
         Problem problem = new Problem(e.getClass().getSimpleName(), e.getMessage());
         ForecastResponse response = new ForecastResponse(problem);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
