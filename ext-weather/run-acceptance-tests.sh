@@ -11,21 +11,12 @@
 # start out in the script's directory
 cd "$(dirname "$0")"
 
-# build the ext-weather.jar artifact
-echo ""
-echo "********** building ext-weather.jar **********"
-cd service
-mvn clean package -Dmaven.test.skip=true
-
-# build the container
-echo ""
-echo "********** building ext-weather container **********"
-docker build . -t ext-weather:latest
+# Compile source and create Docker container
+./build-artifacts.sh
 
 # startup containers required for acceptance tests
 echo ""
 echo "********** booting up acceptance testing environment **********"
-cd ..
 docker-compose -f docker-compose-at.yml up -d
 
 # wait for containers to start up

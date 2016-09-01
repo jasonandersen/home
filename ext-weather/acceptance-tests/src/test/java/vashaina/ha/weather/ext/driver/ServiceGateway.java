@@ -1,4 +1,4 @@
-package vashaina.ha.weather.ext.cucumber;
+package vashaina.ha.weather.ext.driver;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,16 +19,20 @@ import org.springframework.web.client.RestTemplate;
 import vashaina.ha.service.virtual.ServiceDouble;
 import vashaina.ha.service.virtual.ServiceDoubleRequest;
 import vashaina.ha.service.virtual.ServiceVirtualizer;
-import vashaina.ha.weather.ext.wunderground.WundergroundStub;
+import vashaina.ha.weather.ext.driver.wunderground.WundergroundStub;
 
 /**
  * Proxies requests out to the ext-weather service, stubbing out the
  * downstream Wunderground API dependency.
  */
 @Component
-public class ExternalWeatherGateway {
+public class ServiceGateway {
 
-    private static Logger log = LoggerFactory.getLogger(ExternalWeatherGateway.class);
+    /*
+     * NOTE: this class needs to be thread safe!
+     */
+
+    private static Logger log = LoggerFactory.getLogger(ServiceGateway.class);
 
     private static final int WG_PORT = 7575;
     private static final int RESPONSE_CODE = 200;
@@ -51,7 +55,7 @@ public class ExternalWeatherGateway {
      * @param zip 
      * @return the response from the external weather service
      */
-    public ExternalWeatherResponse executeFromZip(String zip, WundergroundStub stub) {
+    public Response executeFromZip(String zip, WundergroundStub stub) {
         String url = buildServiceUrlFromZip(zip);
         return execute(url, stub);
     }
@@ -62,19 +66,25 @@ public class ExternalWeatherGateway {
      * @param stub
      * @return the response from the external weather service
      */
-    public ExternalWeatherResponse executeFromPath(String path, WundergroundStub stub) {
+    public Response executeFromPath(String path, WundergroundStub stub) {
         String url = buildServiceUrlFromPath(path);
         return execute(url, stub);
     }
 
-    private ExternalWeatherResponse execute(String url, WundergroundStub stub) {
+    /**
+     * Executes a request.
+     * @param url
+     * @param stub
+     * @return the response from the external weather service
+     */
+    private Response execute(String url, WundergroundStub stub) {
         try {
             setupServiceDouble(stub);
             log.info("calling external weather service at {}", url);
             ResponseEntity<String> responseEntity = callService(url);
             log.debug("external weather response {}: {}",
                     responseEntity.getStatusCode().toString(), responseEntity.getBody());
-            ExternalWeatherResponse response = new ExternalWeatherResponse(
+            Response response = new Response(
                     responseEntity.getBody(), responseEntity.getStatusCodeValue());
             return response;
         } finally {

@@ -1,4 +1,4 @@
-package vashaina.ha.weather.ext.wunderground;
+package vashaina.ha.weather.ext.driver.wunderground;
 
 /**
  * Simple stub setup for a call to Wunderground.com
@@ -21,7 +21,7 @@ public class SimpleStub implements WundergroundStub {
     }
 
     /**
-     * @see vashaina.ha.weather.ext.wunderground.WundergroundStub#getPath()
+     * @see vashaina.ha.weather.ext.driver.wunderground.WundergroundStub#getPath()
      */
     @Override
     public String getPath() {
@@ -32,7 +32,7 @@ public class SimpleStub implements WundergroundStub {
     }
 
     /**
-     * @see vashaina.ha.weather.ext.wunderground.WundergroundStub#getResponse()
+     * @see vashaina.ha.weather.ext.driver.wunderground.WundergroundStub#getResponse()
      */
     @Override
     public String getResponse() {

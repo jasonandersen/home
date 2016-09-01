@@ -1,4 +1,4 @@
-package vashaina.ha.weather.ext.wunderground;
+package vashaina.ha.weather.ext.driver.wunderground;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ public class TemplatedStub implements WundergroundStub {
     }
 
     /**
-     * @see vashaina.ha.weather.ext.wunderground.WundergroundStub#getResponse()
+     * @see vashaina.ha.weather.ext.driver.wunderground.WundergroundStub#getResponse()
      */
     @Override
     public String getResponse() {
@@ -40,7 +40,7 @@ public class TemplatedStub implements WundergroundStub {
     }
 
     /**
-     * @see vashaina.ha.weather.ext.wunderground.WundergroundStub#getUrl()
+     * @see vashaina.ha.weather.ext.driver.wunderground.WundergroundStub#getUrl()
      */
     @Override
     public String getPath() {

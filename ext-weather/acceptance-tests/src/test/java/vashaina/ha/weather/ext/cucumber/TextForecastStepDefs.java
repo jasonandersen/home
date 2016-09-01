@@ -1,24 +1,29 @@
 package vashaina.ha.weather.ext.cucumber;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import vashaina.ha.weather.ext.wunderground.TemplatedStub;
-import vashaina.ha.weather.ext.wunderground.WundergroundStub;
+import vashaina.ha.weather.ext.driver.TextForecastDriver;
 
 /**
  * Step definitions to call the ha-ext-weather-ws web service.
  */
-public class TextForecastStepDefs extends BaseCucumberSteps {
+public class TextForecastStepDefs {
 
     @Autowired
-    private ExternalWeatherGateway gateway;
+    private TextForecastDriver driver;
+
+    @Before
+    public void setupDriver() {
+        driver.reset();
+    }
 
     @SuppressWarnings("unused")
     @Given("^today is \"([^\"]*)\"$")
@@ -26,140 +31,74 @@ public class TextForecastStepDefs extends BaseCucumberSteps {
         //NOOP - nothing is required for this, just a documenting step
     }
 
+    @SuppressWarnings("unused")
     @Given("^we are requesting a forecast for zip code (\\d+)$")
     public void weAreRequestingAForecastForZipCode(String zip) throws Throwable {
-        put(KEY_REQUEST_ZIP, zip);
+        //NOOP - this didn't seem to do anything?
     }
 
     @Given("^the Wunderground forecast for today is \"([^\"]*)\"$")
     public void theWundergroundForecastForTodayIs(String todaysForecast) throws Throwable {
-        put(KEY_WG_FORECAST_TODAY, todaysForecast);
+        driver.setTodaysForecast(todaysForecast);
     }
 
     @Given("^the Wunderground forecast for tonight is \"([^\"]*)\"$")
     public void theWundergroundForecastForTonightIs(String tonightsForecast) throws Throwable {
-        put(KEY_WG_FORECAST_TONIGHT, tonightsForecast);
+        driver.setTonightsForecast(tonightsForecast);
     }
 
     @Given("^the Wunderground forecast for tomorrow is \"([^\"]*)\"$")
     public void theWundergroundForecastForTomorrowIs(String tomorrowsForecast) throws Throwable {
-        put(KEY_WG_FORECAST_TOMORROW, tomorrowsForecast);
+        driver.setTomorrowsForecast(tomorrowsForecast);
     }
 
     @Given("^the Wunderground forecast for tomorrow night is \"([^\"]*)\"$")
     public void theWundergroundForecastForTomorrowNightIs(String tomorrowNightsForecast) throws Throwable {
-        put(KEY_WG_FORECAST_TOMORROW_NIGHT, tomorrowNightsForecast);
+        driver.setTomorrowNightsForecast(tomorrowNightsForecast);
     }
 
     @When("^I request a forecast for zip code \"([^\"]*)\"$")
     public void iRequestAForecastForZipCode(String zip) throws Throwable {
-        weAreRequestingAForecastForZipCode(zip);
-        submitRequest();
+        driver.requestForecastForZip(zip);
     }
 
     @Then("^the forecast for today is \"([^\"]*)\"$")
     public void theForecastForTodayIs(String expectedTodaysForecast) throws Throwable {
-        String actualTodaysForecast = getActualTodaysForecast();
+        String actualTodaysForecast = driver.getActualTodaysForecast();
         assertEquals(expectedTodaysForecast, actualTodaysForecast);
     }
 
     @Then("^the forecast for tomorrow is \"([^\"]*)\"$")
     public void theForecastForTomorrowIs(String expectedTomorrowsForecast) throws Throwable {
-        String actualTomorrowsForecast = getActualTomorrowsForecast();
+        String actualTomorrowsForecast = driver.getActualTomorrowsForecast();
         assertEquals(expectedTomorrowsForecast, actualTomorrowsForecast);
     }
 
     @Then("^the source is \"([^\"]*)\"$")
     public void theSourceIs(String expectedSource) throws Throwable {
-        String actualSource = getActualSource();
+        String actualSource = driver.getActualSource();
         assertEquals(expectedSource, actualSource);
     }
 
     @Then("^the zip code is \"([^\"]*)\"$")
     public void theZipCodeIs(String expectedZip) throws Throwable {
-        String actualZip = getActualZip();
+        String actualZip = driver.getActualZip();
         assertEquals(expectedZip, actualZip);
     }
 
     @Then("^there are no errors$")
     public void thereAreNoErrors() throws Throwable {
-        fail("not implemented yet");
+        assertFalse(driver.hasError());
     }
 
     @Then("^I get an \"([^\"]*)\" error$")
-    public void iGetAnError(String arg1) throws Throwable {
-        fail("not implemented yet");
+    public void iGetAnError(String errorType) throws Throwable {
+        assertTrue(driver.errorExists(errorType));
     }
 
     @Then("^the error message is \"([^\"]*)\"$")
-    public void theErrorMessageIs(String arg1) throws Throwable {
-        fail("not implemented yet");
-    }
-
-    /**
-     * @see vashaina.ha.weather.ext.domain.BaseCucumberSteps#tearDown()
-     */
-    @After
-    @Override
-    public void tearDown() {
-        super.tearDownTestContext();
-    }
-
-    /**
-     * Submits request to the service.
-     */
-    private void submitRequest() {
-        String zip = get(KEY_REQUEST_ZIP);
-        WundergroundStub stub = buildStub(zip);
-        ExternalWeatherResponse response = gateway.executeFromZip(zip, stub);
-        put(KEY_SUT_RESPONSE, response);
-    }
-
-    /**
-     * @return the wunderground stubbed out call
-     */
-    private WundergroundStub buildStub(String zip) {
-        TemplatedStub stub = new TemplatedStub(zip);
-        stub.setTodaysForecast((String) get(KEY_WG_FORECAST_TODAY));
-        stub.setTonightsForecast((String) get(KEY_WG_FORECAST_TONIGHT));
-        stub.setTomorrowsForecast((String) get(KEY_WG_FORECAST_TOMORROW));
-        stub.setTomorrowNightsForecast((String) get(KEY_WG_FORECAST_TOMORROW_NIGHT));
-        return stub;
-    }
-
-    /**
-     * @return the forecast for today returned by the service
-     */
-    private String getActualTodaysForecast() {
-        return getResponse().getTodaysForecast();
-    }
-
-    /**
-     * @return the forecast for tomorrow returned by the service
-     */
-    private String getActualTomorrowsForecast() {
-        return getResponse().getTomorrowsForecast();
-    }
-
-    /**
-     * @return the source of the forecast returned by the service
-     */
-    private String getActualSource() {
-        return null;
-    }
-
-    /**
-     * @return the zip code of the forecast request returned by the service
-     */
-    private String getActualZip() {
-        return null;
-    }
-
-    /**
-     * @return the external weather service call response
-     */
-    private ExternalWeatherResponse getResponse() {
-        return get(KEY_SUT_RESPONSE);
+    public void theErrorMessageIs(String errorMessage) throws Throwable {
+        assertEquals(errorMessage, driver.getErrorMessage());
     }
 
 }

@@ -10,9 +10,11 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import vashaina.ha.weather.ext.driver.ServiceGateway;
+import vashaina.ha.weather.ext.driver.Response;
+import vashaina.ha.weather.ext.driver.wunderground.SimpleStub;
+import vashaina.ha.weather.ext.driver.wunderground.WundergroundStub;
 import vashaina.ha.weather.ext.test.TestUtils;
-import vashaina.ha.weather.ext.wunderground.SimpleStub;
-import vashaina.ha.weather.ext.wunderground.WundergroundStub;
 
 /**
  * Step definitions for ext-weather service specification tests.
@@ -20,7 +22,7 @@ import vashaina.ha.weather.ext.wunderground.WundergroundStub;
 public class ExtWeatherServiceSpecificationSteps extends BaseCucumberSteps {
 
     @Autowired
-    private ExternalWeatherGateway gateway;
+    private ServiceGateway gateway;
 
     @Given("^this stubbed response:$")
     public void thisStubbedResponse(Map<String, String> attributes) throws Throwable {
@@ -34,19 +36,19 @@ public class ExtWeatherServiceSpecificationSteps extends BaseCucumberSteps {
     public void thisRequestIsReceived(Map<String, String> attributes) throws Throwable {
         String path = attributes.get("path");
         WundergroundStub stub = get(KEY_WG_STUB);
-        ExternalWeatherResponse response = gateway.executeFromPath(path, stub);
+        Response response = gateway.executeFromPath(path, stub);
         put(KEY_SUT_RESPONSE, response);
     }
 
     @Then("^a status code ([^\"]*) is returned$")
     public void aStatusCodeIsReturned(int code) throws Throwable {
-        ExternalWeatherResponse response = get(KEY_SUT_RESPONSE);
+        Response response = get(KEY_SUT_RESPONSE);
         assertEquals(code, response.getStatusCode());
     }
 
     @Then("^this response body is returned:$")
     public void thisResponseBodyIsReturned(String expectedResponse) throws Throwable {
-        ExternalWeatherResponse response = get(KEY_SUT_RESPONSE);
+        Response response = get(KEY_SUT_RESPONSE);
         assertEquals(expectedResponse, response.getResponseBody());
     }
 

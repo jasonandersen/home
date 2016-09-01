@@ -1,4 +1,4 @@
-package vashaina.ha.weather.ext.cucumber;
+package vashaina.ha.weather.ext.driver;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,23 +6,27 @@ import java.util.regex.Pattern;
 /**
  * A response returned from calling the external weather service.
  */
-public class ExternalWeatherResponse {
+public class Response {
 
     private final String response;
     private final int statusCode;
     private final Pattern todaysForecastPattern;
     private final Pattern tomorrowsForecastPattern;
+    private final Pattern sourcePattern;
+    private final Pattern zipPattern;
 
     /**
      * Constructor
      * @param rawResponse
      * @param statusCode 
      */
-    public ExternalWeatherResponse(String response, int statusCode) {
+    public Response(String response, int statusCode) {
         this.response = response;
         this.statusCode = statusCode;
         todaysForecastPattern = Pattern.compile("(?<=\"todaysForecast\":\").+?(?=\")");
         tomorrowsForecastPattern = Pattern.compile("(?<=\"tomorrowsForecast\":\").+?(?=\")");
+        sourcePattern = Pattern.compile("(?<=\"source\":\").+?(?=\")");
+        zipPattern = Pattern.compile("(?<=\"zipCode\":\").+?(?=\")");
     }
 
     /**
@@ -54,6 +58,20 @@ public class ExternalWeatherResponse {
     }
 
     /**
+     * @return the forecast's original source
+     */
+    public String getSource() {
+        return findSubstring(sourcePattern);
+    }
+
+    /**
+     * @return the forecast's zip code
+     */
+    public String getZip() {
+        return findSubstring(zipPattern);
+    }
+
+    /**
      * Given a regex pattern, will find a substring in the JSON response
      * @param pattern
      * @return the substring if found, otherwise a blank string
@@ -68,6 +86,27 @@ public class ExternalWeatherResponse {
             return matcher.group();
         }
         return "";
+    }
+
+    /**
+     * @return true if this response has an error
+     */
+    public boolean hasError() {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    /**
+     * @return the type of the error
+     */
+    public String getErrorType() {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
+    /**
+     * @return the message in the error
+     */
+    public String getErrorMessage() {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
 }
