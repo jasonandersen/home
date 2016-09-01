@@ -2,9 +2,11 @@ package vashaina.ha.weather.ext.cucumber;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
@@ -13,8 +15,9 @@ import cucumber.api.java.en.When;
 import vashaina.ha.weather.ext.driver.TextForecastDriver;
 
 /**
- * Step definitions to call the ha-ext-weather-ws web service.
+ * Step definitions to retrieve text forecasts from the ext-weather web service.
  */
+@ContextConfiguration(locations = { "classpath:features/cucumber.xml" })
 public class TextForecastStepDefs {
 
     @Autowired
@@ -22,6 +25,7 @@ public class TextForecastStepDefs {
 
     @Before
     public void setupDriver() {
+        assertNotNull("test driver is null", driver);
         driver.reset();
     }
 

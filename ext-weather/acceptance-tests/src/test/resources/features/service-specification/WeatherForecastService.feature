@@ -1,8 +1,9 @@
-# Specification file for the ext-weather service including happy paths and exception paths.
+# These scenarios are intended to document the service specification. Any consumers
+# of this service should rely on this document as the canonical specification for 
+# this service.
 # 
 # Jason Andersen
 # 2016.08.27
-@SmokeTest
 @ServiceTest
 Feature: ext-weather service specification
 
@@ -14,10 +15,10 @@ Feature: ext-weather service specification
             | response | /data/wunderground/forecast/98070.json                       |
 
     Scenario: Happy path
-        When this request is received:
-            | verb          | GET                       |
-            | path          | /weather/forecast/98070   |
-            | header        | Accept: application/json  |
+        When this document is requested:
+            | verb     | GET                       |
+            | path     | /weather/forecast/98070   |
+            | header   | Accept: application/json  |
         Then a status code 200 is returned
         And this response body is returned:
 """
@@ -33,10 +34,10 @@ Feature: ext-weather service specification
 """
 
     Scenario: Letters in the zip code
-        When this request is received:
-            | verb          | GET                       |
-            | path          | /weather/forecast/ABC     |
-            | header        | Accept: application/json  |
+        When this document is requested:
+            | verb     | GET                       |
+            | path     | /weather/forecast/ABC     |
+            | header   | Accept: application/json  |
         Then a status code 400 is returned
         And this response body is returned:
 """
@@ -50,10 +51,10 @@ Feature: ext-weather service specification
 """
 
     Scenario: Zip code with mixed letters and numbers
-        When this request is received:
-            | verb          | GET                       |
-            | path          | /weather/forecast/a1b2c   |
-            | header        | Accept: application/json  |
+        When this document is requested:
+            | verb     | GET                       |
+            | path     | /weather/forecast/a1b2c   |
+            | header   | Accept: application/json  |
         Then a status code 400 is returned
         And this response body is returned:
 """
@@ -67,10 +68,10 @@ Feature: ext-weather service specification
 """
 
     Scenario: More than 5 digits
-        When this request is received:
-            | verb          | GET                       |
-            | path          | /weather/forecast/980700  |
-            | header        | Accept: application/json  |
+        When this document is requested:
+            | verb     | GET                       |
+            | path     | /weather/forecast/980700  |
+            | header   | Accept: application/json  |
         Then a status code 400 is returned
         And this response body is returned:
 """
@@ -84,10 +85,10 @@ Feature: ext-weather service specification
 """
 
     Scenario: Zip code+ format 
-        When this request is received:
-            | verb          | GET                          |
-            | path          | /weather/forecast/98070-1234 |
-            | header        | Accept: application/json     |
+        When this document is requested:
+            | verb     | GET                          |
+            | path     | /weather/forecast/98070-1234 |
+            | header   | Accept: application/json     |
         Then a status code 400 is returned
         And this response body is returned:
 """

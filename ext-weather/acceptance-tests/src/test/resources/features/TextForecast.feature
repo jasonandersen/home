@@ -2,7 +2,6 @@ Feature: Call an external weather service to retrieve a text forecast
 
     Background:
         Given today is "Monday"
-        And we are requesting a forecast for zip code 98070
         And the Wunderground forecast for today is "Considerable cloudiness. Lows overnight in the mid 50s."
         And the Wunderground forecast for tonight is "Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable."
         And the Wunderground forecast for tomorrow is "Cloudy. Slight chance of a rain shower. High 71F. Winds SSW at 5 to 10 mph."

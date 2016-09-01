@@ -23,7 +23,7 @@ import vashaina.ha.weather.ext.driver.wunderground.WundergroundStub;
 
 /**
  * Proxies requests out to the ext-weather service, stubbing out the
- * downstream Wunderground API dependency.
+ * upstream Wunderground API dependency.
  */
 @Component
 public class ServiceGateway {
