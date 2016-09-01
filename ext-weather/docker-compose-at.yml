@@ -9,6 +9,7 @@
 version: '2'
 services:
 
+  # The ext-weather service container
   ext-weather:
     image: ext-weather:latest
     environment:
@@ -19,7 +20,7 @@ services:
       - "8081:8081"
     entrypoint: java -jar ext-weather.jar --server.port=8081
 
-
+  # Service virtualization used to return test doubles for downstream dependency calls.
   mountebank:
     image: mountebank
     ports:
