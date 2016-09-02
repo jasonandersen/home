@@ -1,6 +1,8 @@
 package vashaina.ha.weather.ext.service.wunderground;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import vashaina.ha.weather.ext.service.wunderground.response.Forecast;
 import vashaina.ha.weather.ext.service.wunderground.response.ForecastDayText;
@@ -21,13 +23,14 @@ import vashaina.ha.weather.ext.service.wunderground.response.TextForecast;
  */
 public class WundergroundForecast {
 
+    public static final String SOURCE = "Wunderground.com";
+
     private static final int IDX_TODAYS_FORECAST = 0;
     private static final int IDX_TONIGHTS_FORECAST = 1;
     private static final int IDX_TOMORROWS_FORECAST = 2;
     private static final int IDX_TOMORROW_NIGHTS_FORECAST = 3;
 
     private final ForecastResponse forecastResponse;
-
     private final String url;
 
     /**
@@ -52,6 +55,20 @@ public class WundergroundForecast {
      */
     public String getUrl() {
         return url;
+    }
+
+    /**
+     * @return the zip code that this request is for, if the zip code cannot be discovered will 
+     *      return a blank string, will never return null
+     */
+    public String getZipCode() {
+        String regex = "(?<=/)\\d{5}(?=\\.json)";//"(?<=/)\\d{5}(?=\\.json)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(url);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return "";
     }
 
     /**

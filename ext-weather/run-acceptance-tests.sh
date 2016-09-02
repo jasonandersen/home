@@ -27,7 +27,7 @@ sleep 10s
 echo ""
 echo "********** running acceptance tests **********"
 cd acceptance-tests
-mvn clean verify
+mvn clean test 
 
 # shutdown the containers
 echo ""

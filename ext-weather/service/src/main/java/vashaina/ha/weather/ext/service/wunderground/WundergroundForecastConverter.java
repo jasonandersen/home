@@ -17,7 +17,8 @@ public class WundergroundForecastConverter implements Converter<WundergroundFore
      */
     @Override
     public Forecast convert(WundergroundForecast source) {
-        return new Forecast(source.getTodaysForecast(), source.getTomorrowsTextForecast());
+        return new Forecast(source.getTodaysForecast(), source.getTomorrowsTextForecast(),
+                WundergroundForecast.SOURCE, source.getZipCode());
     }
 
 }

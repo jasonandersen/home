@@ -20,10 +20,8 @@ import vashaina.ha.weather.ext.service.wunderground.response.TextForecast;
  */
 public class WundergroundForecastTest {
 
-    private static final String URL = "http://host/path/to/api/call";
-
+    private String url = "http://api.wunderground.com/api/APIKEY/forecast/q/98070.json";
     private WundergroundForecast forecast;
-
     private ForecastResponse response;
 
     @Before
@@ -65,7 +63,7 @@ public class WundergroundForecastTest {
         response.setResponse(resp);
 
         //setup test target
-        forecast = new WundergroundForecast(response, URL);
+        forecast = new WundergroundForecast(response, url);
     }
 
     /*
@@ -74,7 +72,7 @@ public class WundergroundForecastTest {
     @Test
     public void testUrlNotNull() {
         assertNotNull(forecast.getUrl());
-        assertEquals(URL, forecast.getUrl());
+        assertEquals(url, forecast.getUrl());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -98,13 +96,31 @@ public class WundergroundForecastTest {
 
     @Test
     public void testApiVersionNullForecastResponse() {
-        forecast = new WundergroundForecast(null, URL);
+        forecast = new WundergroundForecast(null, url);
         assertEquals("", forecast.getApiVersion());
     }
 
     @Test
     public void testToString() {
-        assertEquals("WundergroundForecast:url=http://host/path/to/api/call;apiVersion=0.1", forecast.toString());
+        assertEquals(
+                "WundergroundForecast:url=http://api.wunderground.com/api/APIKEY/forecast/q/98070.json;apiVersion=0.1",
+                forecast.toString());
+    }
+
+    /*
+     * zip code tests
+     */
+
+    @Test
+    public void testZip() {
+        assertEquals("98070", forecast.getZipCode());
+    }
+
+    @Test
+    public void testUrlDoesNotContainZip() {
+        String noZipUrl = "http://api.wunderground.com/api/APIKEY/forecast/q/MONKEY.json";
+        forecast = new WundergroundForecast(response, noZipUrl);
+        assertEquals("", forecast.getZipCode());
     }
 
     /*
@@ -119,7 +135,7 @@ public class WundergroundForecastTest {
 
     @Test
     public void testTomorrowsForecastResponseIsNull() {
-        forecast = new WundergroundForecast(null, URL);
+        forecast = new WundergroundForecast(null, url);
         assertTextForecast("", "");
     }
 

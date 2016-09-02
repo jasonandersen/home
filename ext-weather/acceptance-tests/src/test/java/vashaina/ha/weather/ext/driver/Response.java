@@ -10,10 +10,12 @@ public class Response {
 
     private final String response;
     private final int statusCode;
-    private final Pattern todaysForecastPattern;
-    private final Pattern tomorrowsForecastPattern;
-    private final Pattern sourcePattern;
-    private final Pattern zipPattern;
+    private final Pattern todaysForecastPattern = Pattern.compile("(?<=\"todaysForecast\":\").+?(?=\")");
+    private final Pattern tomorrowsForecastPattern = Pattern.compile("(?<=\"tomorrowsForecast\":\").+?(?=\")");
+    private final Pattern sourcePattern = Pattern.compile("(?<=\"source\":\").+?(?=\")");
+    private final Pattern zipPattern = Pattern.compile("(?<=\"zipCode\":\").+?(?=\")");
+    private final Pattern problemDescriptionPattern = Pattern.compile("(?<=\"description\":\").+?(?=\")");
+    private final Pattern problemTypePattern = Pattern.compile("(?<=\"type\":\").+?(?=\")");
 
     /**
      * Constructor
@@ -23,10 +25,6 @@ public class Response {
     public Response(String response, int statusCode) {
         this.response = response;
         this.statusCode = statusCode;
-        todaysForecastPattern = Pattern.compile("(?<=\"todaysForecast\":\").+?(?=\")");
-        tomorrowsForecastPattern = Pattern.compile("(?<=\"tomorrowsForecast\":\").+?(?=\")");
-        sourcePattern = Pattern.compile("(?<=\"source\":\").+?(?=\")");
-        zipPattern = Pattern.compile("(?<=\"zipCode\":\").+?(?=\")");
     }
 
     /**
@@ -88,25 +86,35 @@ public class Response {
         return "";
     }
 
+    /*
+    {
+    "forecast":null,
+    "problem":{
+        "type":"InvalidZipCodeException",
+        "description":"zip code must be numeric"
+    }
+    }
+     */
+
     /**
      * @return true if this response has an error
      */
     public boolean hasError() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return !getErrorType().isEmpty();
     }
 
     /**
      * @return the type of the error
      */
     public String getErrorType() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return findSubstring(problemTypePattern);
     }
 
     /**
      * @return the message in the error
      */
     public String getErrorMessage() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return findSubstring(problemDescriptionPattern);
     }
 
 }
