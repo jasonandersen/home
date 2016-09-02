@@ -33,12 +33,22 @@ public class WundergroundForecastTest {
         //text forecast days
         ForecastDayText todaysForecast = new ForecastDayText();
         todaysForecast.setFcttext("today's forecast!");
+        todaysForecast.setTitle("Monday");
+        ForecastDayText tonightsForecast = new ForecastDayText();
+        tonightsForecast.setFcttext("tonight's forecast!");
+        tonightsForecast.setTitle("Monday night");
         ForecastDayText tomorrowsForecast = new ForecastDayText();
         tomorrowsForecast.setFcttext("tomorrow's forecast!");
+        tomorrowsForecast.setTitle("Tuesday");
+        ForecastDayText tomorrowNightsForecast = new ForecastDayText();
+        tomorrowNightsForecast.setFcttext("tomorrow night's forecast!");
+        tomorrowNightsForecast.setTitle("Tuesday night");
 
         List<ForecastDayText> forecastDays = new ArrayList<>();
         forecastDays.add(todaysForecast);
+        forecastDays.add(tonightsForecast);
         forecastDays.add(tomorrowsForecast);
+        forecastDays.add(tomorrowNightsForecast);
 
         //text forecast
         TextForecast textForecast = new TextForecast();
@@ -103,7 +113,8 @@ public class WundergroundForecastTest {
 
     @Test
     public void testTextForecastHappyPath() {
-        assertTextForecast("today's forecast!", "tomorrow's forecast!");
+        assertTextForecast("Monday: today's forecast! Monday night: tonight's forecast!",
+                "Tuesday: tomorrow's forecast! Tuesday night: tomorrow night's forecast!");
     }
 
     @Test
@@ -138,14 +149,17 @@ public class WundergroundForecastTest {
 
     @Test
     public void testForecastDaysOnlyOneEntry() {
+        response.getForecast().getTxtForecast().getForecastDays().remove(3);
+        response.getForecast().getTxtForecast().getForecastDays().remove(2);
         response.getForecast().getTxtForecast().getForecastDays().remove(1);
-        assertTextForecast("today's forecast!", "");
+        assertTextForecast("Monday: today's forecast!", "");
     }
 
     @Test
     public void testForecastDayTextFcttextIsNull() {
-        response.getForecast().getTxtForecast().getForecastDays().get(1).setFcttext(null);
-        assertTextForecast("today's forecast!", "");
+        response.getForecast().getTxtForecast().getForecastDays().get(3).setFcttext(null);
+        response.getForecast().getTxtForecast().getForecastDays().get(2).setFcttext(null);
+        assertTextForecast("Monday: today's forecast! Monday night: tonight's forecast!", "");
     }
 
     /**

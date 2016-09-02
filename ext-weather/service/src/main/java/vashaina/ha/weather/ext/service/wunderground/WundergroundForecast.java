@@ -22,7 +22,9 @@ import vashaina.ha.weather.ext.service.wunderground.response.TextForecast;
 public class WundergroundForecast {
 
     private static final int IDX_TODAYS_FORECAST = 0;
-    private static final int IDX_TOMORROWS_FORECAST = 1;
+    private static final int IDX_TONIGHTS_FORECAST = 1;
+    private static final int IDX_TOMORROWS_FORECAST = 2;
+    private static final int IDX_TOMORROW_NIGHTS_FORECAST = 3;
 
     private final ForecastResponse forecastResponse;
 
@@ -71,7 +73,7 @@ public class WundergroundForecast {
      *      forecast cannot be retrieved out of the response - will never return null
      */
     public String getTodaysForecast() {
-        return getTextForecast(IDX_TODAYS_FORECAST);
+        return buildDayForecastText(IDX_TODAYS_FORECAST, IDX_TONIGHTS_FORECAST);
     }
 
     /**
@@ -79,7 +81,34 @@ public class WundergroundForecast {
      *      forecast cannot be retrieved out of the response - never returns null
      */
     public String getTomorrowsTextForecast() {
-        return getTextForecast(IDX_TOMORROWS_FORECAST);
+        return buildDayForecastText(IDX_TOMORROWS_FORECAST, IDX_TOMORROW_NIGHTS_FORECAST);
+    }
+
+    /**
+     * Builds a single day's forecast from two different periods.
+     * @param firstPeriodIndex
+     * @param secondPeriodIndex
+     * @return a string with a single day's forecast text combined from two different periods.
+     */
+    private String buildDayForecastText(int firstPeriodIndex, int secondPeriodIndex) {
+        String firstTitle = getPeriodTitle(firstPeriodIndex);
+        String firstText = getTextForecast(firstPeriodIndex);
+        String secondTitle = getPeriodTitle(secondPeriodIndex);
+        String secondText = getTextForecast(secondPeriodIndex);
+
+        StringBuffer out = new StringBuffer();
+        if (!firstText.isEmpty() && !firstTitle.isEmpty()) {
+            out.append(firstTitle).append(": ");
+        }
+        out.append(firstText);
+        if (!secondText.isEmpty()) {
+            out.append(" ");
+            if (!secondTitle.isEmpty()) {
+                out.append(secondTitle).append(": ");
+            }
+            out.append(secondText);
+        }
+        return out.toString();
     }
 
     /**
@@ -91,6 +120,20 @@ public class WundergroundForecast {
         if (forecast != null) {
             if (forecast.getFcttext() != null) {
                 return forecast.getFcttext();
+            }
+        }
+        return "";
+    }
+
+    /**
+     * @return the title of the period specified at the index, will return blank string 
+     *      if it cannot be retrieved - never returns null
+     */
+    private String getPeriodTitle(int index) {
+        ForecastDayText forecast = getForecastDayText(index);
+        if (forecast != null) {
+            if (forecast.getTitle() != null) {
+                return forecast.getTitle();
             }
         }
         return "";

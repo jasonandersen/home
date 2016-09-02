@@ -65,14 +65,14 @@ public class WundergroundForecastConverterTest extends BaseIntegrationTest {
     @Test
     public void testTodaysForecast() {
         target = service.convert(source, Forecast.class);
-        String expectedForecast = "Considerable cloudiness. Lows overnight in the mid 50s.";
+        String expectedForecast = "Monday: Considerable cloudiness. Lows overnight in the mid 50s. Monday Night: Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable.";
         assertEquals(expectedForecast, target.getTodaysForecast());
     }
 
     @Test
     public void testTomorrowsForecast() {
         target = service.convert(source, Forecast.class);
-        String expectedForecast = "Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable.";
+        String expectedForecast = "Tuesday: Cloudy. Slight chance of a rain shower. High 71F. Winds SSW at 5 to 10 mph. Tuesday Night: Mostly cloudy skies. Low 57F. Winds SSW at 5 to 10 mph.";
         assertEquals(expectedForecast, target.getTomorrowsForecast());
     }
 

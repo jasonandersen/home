@@ -32,8 +32,8 @@ public class WundergroundForecastCommandTest {
     @Test
     public void testRunHappyPath() throws Exception {
         WundergroundForecast forecast = command.run();
-        assertEquals("Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable.",
-                forecast.getTomorrowsTextForecast());
+        String expected = "Tuesday: Cloudy. Slight chance of a rain shower. High 71F. Winds SSW at 5 to 10 mph. Tuesday Night: Mostly cloudy skies. Low 57F. Winds SSW at 5 to 10 mph.";
+        assertEquals(expected, forecast.getTomorrowsTextForecast());
     }
 
     @Test(expected = IllegalArgumentException.class)

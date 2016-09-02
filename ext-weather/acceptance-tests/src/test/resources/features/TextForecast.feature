@@ -2,15 +2,15 @@ Feature: Call an external weather service to retrieve a text forecast
 
     Background:
         Given today is "Monday"
-        And the Wunderground forecast for today is "Considerable cloudiness. Lows overnight in the mid 50s."
-        And the Wunderground forecast for tonight is "Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable."
-        And the Wunderground forecast for tomorrow is "Cloudy. Slight chance of a rain shower. High 71F. Winds SSW at 5 to 10 mph."
-        And the Wunderground forecast for tomorrow night is "Mostly cloudy skies. Low 57F. Winds SSW at 5 to 10 mph."
+        And the Wunderground forecast for today is "Today's forecast."
+        And the Wunderground forecast for tonight is "Tonight's forecast."
+        And the Wunderground forecast for tomorrow is "Tomorrow's forecast."
+        And the Wunderground forecast for tomorrow night is "Tomorrow night's forecast."
 
     Scenario: Retrieve text forecast based on zip code
         When I request a forecast for zip code "98070"
-        Then the forecast for today is "Monday: Considerable cloudiness. Lows overnight in the mid 50s. Monday night: Mostly cloudy skies. A stray shower or thunderstorm is possible. Low 56F. Winds light and variable."
-        And the forecast for tomorrow is "Tuesday: Cloudy. Slight chance of a rain shower. High 71F. Winds SSW at 5 to 10 mph. Tuesday night: Mostly cloudy skies. Low 57F. Winds SSW at 5 to 10 mph."
+        Then the forecast for today is "Monday: Today's forecast. Monday Night: Tonight's forecast."
+        And the forecast for tomorrow is "Tuesday: Tomorrow's forecast. Tuesday Night: Tomorrow night's forecast."
         And the source is "Wunderground.com"
         And the zip code is "98070"
         And there are no errors
