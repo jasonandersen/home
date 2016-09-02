@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class ServiceVirtualizerTest extends IntegrationTest {
 
+    /*
+     * NOTE: these tests require an instance of Mountebank running on port 2525.
+     */
     private static final String RESPONSE_BODY = "{\"ok\":\"hell yeah\"}";
 
     @Autowired
