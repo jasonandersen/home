@@ -70,33 +70,6 @@ public class Response {
     }
 
     /**
-     * Given a regex pattern, will find a substring in the JSON response
-     * @param pattern
-     * @return the substring if found, otherwise a blank string
-     */
-    private String findSubstring(Pattern pattern) {
-        if (response == null) {
-            return "";
-        }
-
-        Matcher matcher = pattern.matcher(response);
-        if (matcher.find()) {
-            return matcher.group();
-        }
-        return "";
-    }
-
-    /*
-    {
-    "forecast":null,
-    "problem":{
-        "type":"InvalidZipCodeException",
-        "description":"zip code must be numeric"
-    }
-    }
-     */
-
-    /**
      * @return true if this response has an error
      */
     public boolean hasError() {
@@ -115,6 +88,23 @@ public class Response {
      */
     public String getErrorMessage() {
         return findSubstring(problemDescriptionPattern);
+    }
+
+    /**
+     * Given a regex pattern, will find a substring in the JSON response
+     * @param pattern
+     * @return the substring if found, otherwise a blank string
+     */
+    private String findSubstring(Pattern pattern) {
+        if (response == null) {
+            return "";
+        }
+
+        Matcher matcher = pattern.matcher(response);
+        if (matcher.find()) {
+            return matcher.group();
+        }
+        return "";
     }
 
 }
