@@ -2,7 +2,6 @@ package vashaina.ha.weather.ext.cucumber;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ public class TextForecastStepDefs {
 
     @Before
     public void setupDriver() {
-        assertNotNull("test driver is null", driver);
         driver.reset();
     }
 
@@ -68,8 +66,8 @@ public class TextForecastStepDefs {
 
     @Then("^the forecast for today is \"([^\"]*)\"$")
     public void theForecastForTodayIs(String expectedTodaysForecast) throws Throwable {
-        String actualTodaysForecast = driver.getActualTodaysForecast();
-        assertEquals(expectedTodaysForecast, actualTodaysForecast);
+        String actual = driver.getActualTodaysForecast();
+        assertEquals(expectedTodaysForecast, actual);
     }
 
     @Then("^the forecast for tomorrow is \"([^\"]*)\"$")

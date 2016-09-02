@@ -96,7 +96,7 @@ Feature: ext-weather service specification
     "forecast":null,
     "problem":{
         "type":"InvalidZipCodeException",
-        "description":"zip code must be 5 digits"
+        "description":"zip code must be numeric"
     }
 }
 """

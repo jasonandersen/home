@@ -21,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * Some simple testing utilities that I seem to write every time I build something.
  */
@@ -71,7 +73,13 @@ public class TestUtils {
      * @return the same JSON string but formatted in pretty print
      */
     public static String prettyPrintJson(String json) {
-        throw new UnsupportedOperationException("haven't implemented this yet");
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Object object = mapper.readValue(json, Object.class);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -79,6 +87,12 @@ public class TestUtils {
      * @return the same JSON string but all uneccessary white space removed
      */
     public static String minifyJson(String json) {
-        throw new UnsupportedOperationException("haven't implemented this yet");
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Object object = mapper.readValue(json, Object.class);
+            return mapper.writeValueAsString(object);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

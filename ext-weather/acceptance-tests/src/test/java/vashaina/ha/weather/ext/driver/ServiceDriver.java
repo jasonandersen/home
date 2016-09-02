@@ -31,7 +31,7 @@ public class ServiceDriver {
     /**
      * Reset all state within the driver.
      */
-    public void clear() {
+    public void reset() {
         setDefaultValues();
     }
 

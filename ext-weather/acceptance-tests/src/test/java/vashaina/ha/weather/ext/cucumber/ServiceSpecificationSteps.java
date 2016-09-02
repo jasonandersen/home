@@ -7,10 +7,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import vashaina.ha.weather.ext.driver.ServiceDriver;
+import vashaina.ha.weather.ext.test.TestUtils;
 
 /**
  * These step definitions allow for tests defining the actual service specification.
@@ -20,6 +22,11 @@ public class ServiceSpecificationSteps {
 
     @Autowired
     private ServiceDriver driver;
+
+    @Before
+    public void setupDriver() {
+        driver.reset();
+    }
 
     @Given("^this stubbed response:$")
     public void thisStubbedResponse(Map<String, String> attributes) throws Throwable {
@@ -39,7 +46,9 @@ public class ServiceSpecificationSteps {
 
     @Then("^this response body is returned:$")
     public void thisResponseBodyIsReturned(String expectedResponse) throws Throwable {
-        assertEquals(expectedResponse, driver.getResponseBody());
+        String expected = TestUtils.minifyJson(expectedResponse);
+        String actual = TestUtils.minifyJson(driver.getResponseBody());
+        assertEquals(expected, actual);
     }
 
 }
