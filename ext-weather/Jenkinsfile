@@ -18,8 +18,6 @@ node {
     stage 'Unit Test'
     sh "${mvnHome}/bin/mvn -f ext-weather/service/pom.xml test"
     step([$class: 'JUnitResultArchiver', testResults: 'ext-weather/service/target/surefire-reports/*.xml'])
-
-    archive artifacts: 'ext-weather/service/target/ext-weather.jar', fingerprint: true
 }
 def version() {
 	def matcher = readFile('ext-weather/service/pom.xml') =~ '<version>(.+)</version>'
