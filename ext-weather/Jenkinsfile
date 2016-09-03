@@ -20,7 +20,7 @@ node {
     step([$class: 'JUnitResultArchiver', testResults: 'ext-weather/service/target/surefire-reports/*.xml'])
 
     stage 'Static Analysis'
-    sh "${mvnHome}/bin/mvn -f ext-weather/service/pom.xml sonar:sonar -Dsonar.projectKey=ext-weather -Dsonar.projectName=ExternalWeatherServices -Dsonar.projectVersion=${ver} -Dsonar.sources=ext-weather/service/src/main/java -Dsonar.host.url=http://sonarqube:9000"
+    sh "${mvnHome}/bin/mvn -f ext-weather/service/pom.xml sonar:sonar -Dsonar.projectKey=ext-weather -Dsonar.projectName=ExternalWeatherServices -Dsonar.projectVersion=${ver} -Dsonar.sources=src/main/java -Dsonar.host.url=http://sonarqube:9000"
 }
 def version() {
 	def matcher = readFile('ext-weather/service/pom.xml') =~ '<version>(.+)</version>'
