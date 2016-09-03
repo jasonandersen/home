@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import vashaina.ha.weather.ext.service.wunderground.response.Forecast;
 import vashaina.ha.weather.ext.service.wunderground.response.ForecastDayText;
 import vashaina.ha.weather.ext.service.wunderground.response.ForecastResponse;
@@ -24,11 +27,14 @@ import vashaina.ha.weather.ext.service.wunderground.response.TextForecast;
 public class WundergroundForecast {
 
     public static final String SOURCE = "Wunderground.com";
+    private static Logger log = LoggerFactory.getLogger(WundergroundForecast.class);
 
     private static final int IDX_TODAYS_FORECAST = 0;
     private static final int IDX_TONIGHTS_FORECAST = 1;
     private static final int IDX_TOMORROWS_FORECAST = 2;
     private static final int IDX_TOMORROW_NIGHTS_FORECAST = 3;
+
+    private static final Pattern zipCodePattern = Pattern.compile("(?<=/q/)\\d{5}(?=\\.json)");
 
     private final ForecastResponse forecastResponse;
     private final String url;
@@ -62,12 +68,11 @@ public class WundergroundForecast {
      *      return a blank string, will never return null
      */
     public String getZipCode() {
-        String regex = "(?<=/)\\d{5}(?=\\.json)";//"(?<=/)\\d{5}(?=\\.json)";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(url);
+        Matcher matcher = zipCodePattern.matcher(url);
         if (matcher.find()) {
             return matcher.group();
         }
+        log.warn("could not find a zip code in the url {}", url);
         return "";
     }
 
@@ -82,6 +87,7 @@ public class WundergroundForecast {
                 return response.getVersion();
             }
         }
+        log.warn("could not find the API version in this response");
         return "";
     }
 
@@ -139,6 +145,7 @@ public class WundergroundForecast {
                 return forecast.getFcttext();
             }
         }
+        log.warn("unable to retrieve text forecast for index {}", index);
         return "";
     }
 
@@ -153,6 +160,7 @@ public class WundergroundForecast {
                 return forecast.getTitle();
             }
         }
+        log.warn("unable to retrieve period title for index {}", index);
         return "";
     }
 

@@ -95,4 +95,12 @@ public class TestUtils {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Private constructor.
+     */
+    private TestUtils() {
+        //no instantiation for you!
+    }
+
 }

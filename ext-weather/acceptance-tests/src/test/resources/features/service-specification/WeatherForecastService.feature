@@ -7,13 +7,14 @@
 @ServiceTest
 Feature: ext-weather service specification
 
-    # Stub out the call to the Wunderground API
+    # Stub out the upstream dependency on Wunderground.com
     Background:
         Given this stubbed response:
             | verb     | GET                                                          |
             | url      | http://api.wunderground.com/api/APIKEY/forecast/q/98070.json |
             | response | /data/wunderground/forecast/98070.json                       |
 
+    # This is a valid request and response. 
     Scenario: Happy path
         When this document is requested:
             | verb     | GET                       |
@@ -33,62 +34,13 @@ Feature: ext-weather service specification
 }  
 """
 
-    Scenario: Letters in the zip code
+    # An invalid request will return a 400 and describe what the issue is within the 
+    # problem object
+    Scenario: Exception path - alphabetic characters in the zipcode
         When this document is requested:
             | verb     | GET                       |
             | path     | /weather/forecast/ABC     |
             | header   | Accept: application/json  |
-        Then a status code 400 is returned
-        And this response body is returned:
-"""
-{
-    "forecast":null,
-    "problem":{
-        "type":"InvalidZipCodeException",
-        "description":"zip code must be numeric"
-    }
-}
-"""
-
-    Scenario: Zip code with mixed letters and numbers
-        When this document is requested:
-            | verb     | GET                       |
-            | path     | /weather/forecast/a1b2c   |
-            | header   | Accept: application/json  |
-        Then a status code 400 is returned
-        And this response body is returned:
-"""
-{
-    "forecast":null,
-    "problem":{
-        "type":"InvalidZipCodeException",
-        "description":"zip code must be numeric"
-    }
-}
-"""
-
-    Scenario: More than 5 digits
-        When this document is requested:
-            | verb     | GET                       |
-            | path     | /weather/forecast/980700  |
-            | header   | Accept: application/json  |
-        Then a status code 400 is returned
-        And this response body is returned:
-"""
-{
-    "forecast":null,
-    "problem":{
-        "type":"InvalidZipCodeException",
-        "description":"zip code must be 5 digits"
-    }
-}
-"""
-
-    Scenario: Zip code+ format 
-        When this document is requested:
-            | verb     | GET                          |
-            | path     | /weather/forecast/98070-1234 |
-            | header   | Accept: application/json     |
         Then a status code 400 is returned
         And this response body is returned:
 """
