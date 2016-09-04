@@ -31,7 +31,7 @@ node {
        "-Dsonar.projectKey=ext-weather " +
        "-Dsonar.projectName=ExternalWeatherServices " +
        "-Dsonar.projectVersion=${ver} " +
-       "-Dsonar.sources=src/main/java,src/test/java " +
+       "-Dsonar.sources=src/main/java " +
        "-Dsonar.host.url=http://sonarqube:9000"
 }
 
