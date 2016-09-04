@@ -36,7 +36,7 @@ public class ExternalWeatherController {
      * @throws Exception 
      */
     @RequestMapping("/forecast/{zip}")
-    public ForecastResponse retrieveForecast(@PathVariable String zip) throws Exception {
+    public ForecastResponse retrieveForecast(@PathVariable String zip) {
         log.info("retrieving forecast for zip {}", zip);
         ZipCode zipCode = new ZipCode(zip);
         Forecast forecast = weatherService.getForecast(zipCode);

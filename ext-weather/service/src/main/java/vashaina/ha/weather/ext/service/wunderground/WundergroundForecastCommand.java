@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 
+import vashaina.ha.weather.ext.exception.ExternalCallFailedException;
 import vashaina.ha.weather.ext.service.CommandGroup;
 import vashaina.ha.weather.ext.service.wunderground.response.ForecastResponse;
 
@@ -72,7 +73,7 @@ public class WundergroundForecastCommand extends HystrixCommand<WundergroundFore
             return mapper.readValue(json, ForecastResponse.class);
         } catch (IOException e) {
             log.error("deserializing forecast response failed", e);
-            throw new RuntimeException(e);
+            throw new ExternalCallFailedException("deserializing forecast response failed", e);
         }
     }
 
