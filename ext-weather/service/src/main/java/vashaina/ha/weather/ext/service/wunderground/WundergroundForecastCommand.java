@@ -48,7 +48,7 @@ public class WundergroundForecastCommand extends HystrixCommand<WundergroundFore
      * @see com.netflix.hystrix.HystrixCommand#run()
      */
     @Override
-    protected WundergroundForecast run() throws Exception {
+    protected WundergroundForecast run() {
         log.debug("requesting wunderground forecast from {}", url);
         ForecastResponse response = deserialize(getForecastJson());
         WundergroundForecast forecast = new WundergroundForecast(response, url);

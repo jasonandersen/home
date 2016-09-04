@@ -82,10 +82,8 @@ public class WundergroundForecast {
      */
     public String getApiVersion() {
         Response response = getResponse();
-        if (response != null) {
-            if (response.getVersion() != null) {
-                return response.getVersion();
-            }
+        if (response != null && response.getVersion() != null) {
+            return response.getVersion();
         }
         log.warn("could not find the API version in this response");
         return "";
@@ -119,7 +117,7 @@ public class WundergroundForecast {
         String secondTitle = getPeriodTitle(secondPeriodIndex);
         String secondText = getTextForecast(secondPeriodIndex);
 
-        StringBuffer out = new StringBuffer();
+        StringBuilder out = new StringBuilder();
         if (!firstText.isEmpty() && !firstTitle.isEmpty()) {
             out.append(firstTitle).append(": ");
         }
@@ -140,10 +138,8 @@ public class WundergroundForecast {
      */
     private String getTextForecast(int index) {
         ForecastDayText forecast = getForecastDayText(index);
-        if (forecast != null) {
-            if (forecast.getFcttext() != null) {
-                return forecast.getFcttext();
-            }
+        if (forecast != null && forecast.getFcttext() != null) {
+            return forecast.getFcttext();
         }
         log.warn("unable to retrieve text forecast for index {}", index);
         return "";
@@ -155,10 +151,8 @@ public class WundergroundForecast {
      */
     private String getPeriodTitle(int index) {
         ForecastDayText forecast = getForecastDayText(index);
-        if (forecast != null) {
-            if (forecast.getTitle() != null) {
-                return forecast.getTitle();
-            }
+        if (forecast != null && forecast.getTitle() != null) {
+            return forecast.getTitle();
         }
         log.warn("unable to retrieve period title for index {}", index);
         return "";
@@ -179,10 +173,8 @@ public class WundergroundForecast {
      */
     private ForecastDayText getForecastDayText(int index) {
         List<ForecastDayText> forecastDays = getForecastDaysText();
-        if (forecastDays != null) {
-            if (forecastDays.size() > index) {
-                return forecastDays.get(index);
-            }
+        if (forecastDays != null && forecastDays.size() > index) {
+            return forecastDays.get(index);
         }
         return null;
     }

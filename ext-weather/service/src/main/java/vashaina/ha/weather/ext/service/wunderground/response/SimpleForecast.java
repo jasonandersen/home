@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SimpleForecast {
 
     @JsonProperty("forecastday")
-    private List<ForecastDaySimple> forecastDays = new ArrayList<ForecastDaySimple>();
+    private List<ForecastDaySimple> forecastDays = new ArrayList<>();
 
     @JsonProperty("forecastday")
     public List<ForecastDaySimple> getForecastDays() {

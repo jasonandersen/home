@@ -70,7 +70,7 @@ public class TestUtils {
 
     /**
      * @param json
-     * @return the same JSON string but formatted in pretty print
+     * @return the same JSON string formatted in pretty print
      */
     public static String prettyPrintJson(String json) {
         ObjectMapper mapper = new ObjectMapper();
@@ -84,7 +84,7 @@ public class TestUtils {
 
     /**
      * @param json
-     * @return the same JSON string but all uneccessary white space removed
+     * @return the same JSON string with all uneccessary white space removed
      */
     public static String minifyJson(String json) {
         ObjectMapper mapper = new ObjectMapper();

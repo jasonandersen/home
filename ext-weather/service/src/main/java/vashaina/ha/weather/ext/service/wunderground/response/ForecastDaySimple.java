@@ -30,7 +30,7 @@ public class ForecastDaySimple {
     @JsonProperty("icon_url")
     private String iconUrl;
     @JsonIgnore
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<>();
 
     @JsonProperty("date")
     public ForecastDate getDate() {

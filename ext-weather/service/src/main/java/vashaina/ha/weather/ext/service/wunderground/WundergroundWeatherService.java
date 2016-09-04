@@ -55,7 +55,7 @@ public class WundergroundWeatherService implements ExternalWeatherService {
      * @see vashaina.ha.weather.ext.service.ExternalWeatherService#getForecast(ZipCode)
      */
     @Override
-    public Forecast getForecast(ZipCode zip) throws Exception {
+    public Forecast getForecast(ZipCode zip) {
         String url = getForecastUrl(zip);
         WundergroundForecastCommand command = new WundergroundForecastCommand(url, restTemplate);
         WundergroundForecast forecast = command.run();

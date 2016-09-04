@@ -6,6 +6,7 @@ import vashaina.ha.weather.ext.domain.ZipCode;
 /**
  * Provides forecasts from external weather services.
  */
+@FunctionalInterface
 public interface ExternalWeatherService {
 
     /**
@@ -14,6 +15,6 @@ public interface ExternalWeatherService {
      * @return tomorrow's forecast
      * @throws Exception 
      */
-    Forecast getForecast(ZipCode zip) throws Exception;
+    Forecast getForecast(ZipCode zip);
 
 }

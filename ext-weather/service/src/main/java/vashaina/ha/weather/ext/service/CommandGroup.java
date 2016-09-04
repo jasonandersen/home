@@ -7,4 +7,10 @@ public class CommandGroup {
 
     public static final String WUNDERGROUND_API = "api.wunderground.com";
 
+    /**
+     * Private constructor
+     */
+    private CommandGroup() {
+        //no instantiation for you!
+    }
 }
