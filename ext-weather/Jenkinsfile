@@ -5,12 +5,12 @@
 node {
 
 	// the root path to the sub-project being built in this pipeline
-	def pathRoot = "ext-weather/service"
+	def projectRoot = "ext-weather/service"
 
 	// grab all the code and figure out the version we're operating with
     stage 'Checkout'
     git '/opt/code/home-automation/'
-    def ver = version(pathRoot)
+    def ver = version(projectRoot)
     if (ver) {
     	echo "Building version ${ver}"
     }
@@ -18,16 +18,16 @@ node {
     // compile the code
     stage 'Build'
     def mvnHome = tool 'Maven_3.3.9'
-    sh "${mvnHome}/bin/mvn -f ${pathRoot}/pom.xml clean compile"
+    sh "${mvnHome}/bin/mvn -f ${projectRoot}/pom.xml clean compile"
    
     // run the unit tests and archive the results
     stage 'Unit Test'
-    sh "${mvnHome}/bin/mvn -f ${pathRoot}/pom.xml test"
-    step([$class: 'JUnitResultArchiver', testResults: pathRoot + '/target/surefire-reports/*.xml'])
+    sh "${mvnHome}/bin/mvn -f ${projectRoot}/pom.xml test"
+    step([$class: 'JUnitResultArchiver', testResults: "${projectRoot}/target/surefire-reports/*.xml"])
 
     // have SonarQube run static analysis
     stage 'Static Analysis'
-    sh "${mvnHome}/bin/mvn -f ${pathRoot}/pom.xml sonar:sonar " +
+    sh "${mvnHome}/bin/mvn -f ${projectRoot}/pom.xml sonar:sonar " +
        "-Dsonar.projectKey=ext-weather " +
        "-Dsonar.projectName=ExternalWeatherServices " +
        "-Dsonar.projectVersion=${ver} " +
@@ -38,8 +38,8 @@ node {
 /*
  * Grab the version number out of the pom.xml file.
  */
-def version(pathRoot) {
-	def matcher = readFile(pathRoot + '/pom.xml') =~ '<version>(.+)</version>'
+def version(projectRoot) {
+	def matcher = readFile(projectRoot + '/pom.xml') =~ '<version>(.+)</version>'
 	matcher ? matcher[0][1] : null
 }
 
