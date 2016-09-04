@@ -4,20 +4,19 @@
  */
 node {
 
-	// the root path to the sub-project being built in this pipeline
 	def projectRoot = "ext-weather/service"
+	def mvnHome = tool 'Maven_3.3.9'
+	def ver = version(projectRoot)
 
 	// grab all the code and figure out the version we're operating with
     stage 'Checkout'
     git '/opt/code/home-automation/'
-    def ver = version(projectRoot)
     if (ver) {
     	echo "Building version ${ver}"
     }
 
     // compile the code
     stage 'Build'
-    def mvnHome = tool 'Maven_3.3.9'
     sh "${mvnHome}/bin/mvn -f ${projectRoot}/pom.xml clean compile"
    
     // run the unit tests and archive the results
@@ -39,7 +38,7 @@ node {
  * Grab the version number out of the pom.xml file.
  */
 def version(projectRoot) {
-	def matcher = readFile(projectRoot + '/pom.xml') =~ '<version>(.+)</version>'
+	def matcher = readFile("${projectRoot}/pom.xml") =~ '<version>(.+)</version>'
 	matcher ? matcher[0][1] : null
 }
 
