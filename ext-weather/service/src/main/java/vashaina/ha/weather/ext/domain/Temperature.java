@@ -3,6 +3,7 @@ package vashaina.ha.weather.ext.domain;
 /**
  * A single temperature data point.
  */
+@Deprecated
 public class Temperature {
 
     public enum Scale {

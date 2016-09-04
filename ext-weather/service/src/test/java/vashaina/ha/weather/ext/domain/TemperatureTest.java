@@ -4,11 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import vashaina.ha.weather.ext.domain.Temperature;
-
 /**
  * Test the @{Temperature} class.
  */
+@Deprecated
 public class TemperatureTest {
 
     private Temperature temp;
