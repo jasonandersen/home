@@ -48,10 +48,14 @@ public class CorrelationIdFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException {
-        String correlationId = ((HttpServletRequest) request).getHeader(HEADER_CORRELATION);
-        correlationId = verifyOrCreateId(correlationId);
-        MDC.put(KEY_CORRELATION, correlationId);
-        chain.doFilter(request, response);
+        try {
+            String correlationId = ((HttpServletRequest) request).getHeader(HEADER_CORRELATION);
+            correlationId = verifyOrCreateId(correlationId);
+            MDC.put(KEY_CORRELATION, correlationId);
+            chain.doFilter(request, response);
+        } finally {
+            MDC.remove(KEY_CORRELATION);
+        }
     }
 
     /**

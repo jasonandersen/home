@@ -37,4 +37,11 @@ public class Base62Converter {
         //
         return builder.reverse().toString();
     }
+
+    /**
+     * Private constructor
+     */
+    private Base62Converter() {
+        //no instantiation for you!
+    }
 }
