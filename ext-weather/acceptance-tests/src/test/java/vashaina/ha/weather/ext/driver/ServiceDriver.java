@@ -83,4 +83,22 @@ public class ServiceDriver {
         response = null;
     }
 
+    /**
+     * @param fieldName
+     * @param fieldValue
+     * @return true if the log messages passed during this test contain the specified value
+     *      in the specified field.
+     */
+    public boolean logMessagesContain(String fieldName, String fieldValue) {
+        return false;
+    }
+
+    /**
+     * @return true if all the log messages that have been collected during this test contain
+     *      valid correlation IDs.
+     */
+    public boolean logMessagesHaveValidCorrelationIds() {
+        return false;
+    }
+
 }

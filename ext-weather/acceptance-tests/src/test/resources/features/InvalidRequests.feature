@@ -19,3 +19,4 @@ Feature: Respond to incorrectly formatted requests
         When I request a forecast for zip code "980700"
         Then I get an "InvalidZipCodeException" error
         And the error message is "zip code must be 5 digits"
+        

@@ -17,22 +17,12 @@ services:
       - wunderground.host.port=7575
       - wunderground.api.key=APIKEY
     ports:
-      - "8081:8081"
-    entrypoint: java -jar ext-weather.jar --server.port=8081
+      - "8080:8080"
     logging:
       driver: syslog
       options:
         tag: "acceptance-testing/{{.ImageName}}"
-
-  # log processor
-  logstash:
-    #build: logstash/
-    image: logstash
-    command: logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - ./logstash:/etc/logstash/conf.d
-    ports:
-      - "5000:5000"
+    
 
   # Service virtualization used to return test doubles for downstream dependency calls.
   mountebank:

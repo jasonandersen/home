@@ -51,6 +51,7 @@ public class WundergroundForecastCommand extends HystrixCommand<WundergroundFore
     @Override
     protected WundergroundForecast run() {
         log.debug("requesting wunderground forecast from {}", url);
+        // TODO: why aren't I using getForObject() ?
         ForecastResponse response = deserialize(getForecastJson());
         WundergroundForecast forecast = new WundergroundForecast(response, url);
         log.debug("response received from wunderground API: {}", forecast.toString());

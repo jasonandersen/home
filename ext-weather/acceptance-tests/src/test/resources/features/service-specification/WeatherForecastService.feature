@@ -1,3 +1,6 @@
+# ext-weather
+# ===========
+# 
 # These scenarios are intended to document the service specification. Any consumers
 # of this service should rely on this document as the canonical specification for 
 # this service.
@@ -34,7 +37,7 @@ Feature: ext-weather service specification
 }  
 """
 
-    # An invalid request will return a 400 and describe what the issue is within the 
+    # An invalid request will return a 400 status code and describe what the issue is within the 
     # problem object
     Scenario: Exception path - alphabetic characters in the zipcode
         When this document is requested:
@@ -52,3 +55,40 @@ Feature: ext-weather service specification
     }
 }
 """
+    
+    # Correlation IDs
+    # ================
+    # 
+    # ext-weather uses correlation IDs to tie log messages from a single request together so all
+    # log messages from one request will have the same correlation ID. If a correlation ID is 
+    # passed in from another application, ext-weather will pick up that correlation ID and use it.
+    # This means a single user request will have the same correlation ID even across multiple 
+    # applications. 
+    #
+    # Correlation IDs are stored in an HTTP header called "X-Correlation-ID". If no header is present
+    # in the request, ext-weather will create a correlation ID from a random long integer and encode
+    # the long in Base62 format.
+    #
+    # Any correlation ID longer than 50 characters will be truncated down to 50 characters.
+    
+    Scenario: Requests that come in without an X-Correlation-ID header will have one generated automatically
+        When this document is requested:
+            | verb     | GET                      |
+            | path     | /weather/forecast/ABC    |
+            | header   | Accept: application/json |
+        Then I see log messages with with a valid correlation ID
+    
+    Scenario: Correlation IDs that get passed in to the X-Correlation-ID header are used for logging
+        When this document is requested:
+            | verb     | GET                                                         |
+            | path     | /weather/forecast/ABC                                       |
+            | header   | Accept: application/json, X-Correlation-ID: i-like-monkeys  |
+        Then I see log messages with "correlationId" of "i-like-monkeys"
+
+    Scenario: Requests that come in with an X-Correlation-ID header longer than 50 characters will be truncated
+        When this document is requested:
+            | verb     | GET                                                                                                           |
+            | path     | /weather/forecast/ABC                                                                                         |
+            | header   | Accept: application/json, X-Correlation-ID: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA  |
+        Then I see log messages with "correlationId" of "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        
