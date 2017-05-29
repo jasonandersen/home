@@ -1,5 +1,5 @@
 # home-automation
-This is a hand-rolled home automation system. It's in its infancy stages so don't get too excited about the available features just. Right now the only working service is the `ext-weather` service which will retrieve weather forecasts and conditions from external sources.
+This is a hand-rolled microservices-based home system. It's in its infancy stages so don't get too excited about the available features just. This is primarily serving as a distributed system I can run at home to do things I want. Eventually, there will be some home automation stuff. I'm working on some simple health data import and analysis at the moment. It also has the ability to retrieve weather forecasts.
 
 ##Technology stack
 The primary technologies for this system is currently:
