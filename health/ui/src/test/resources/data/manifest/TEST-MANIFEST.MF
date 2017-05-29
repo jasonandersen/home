@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Built-By: jenkins
+Build-Jdk: 1.7.0_49
+Created-By: Apache Maven
+Build-Time: 2014-04-05 18:53:13
+
+Build Details
+
+Implementation-Title: Test Project Name
+Implementation-Version: 1.0.1
+Implementation-Build-Number: 742
+Implementation-SCM-Revision: d0c60c86219ebe6f700b3fc161606325325cc567

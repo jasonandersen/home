@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Apple Health Export Upload</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+	<!-- container start -->
+	<div class="container">
+
+
+		<h3>Apple Health Export</h3>
+
+		<div class="alert alert-success" th:if="${successMessage} != null" th:text="${successMessage}"></div>
+
+		<!-- upload form start -->
+		<form method="post" enctype="multipart/form-data" action="/upload">
+			<div class="row">
+				<div class="col-md-6">
+					<p>
+						Select the file that contains your Apple Health data export.
+					</p>
+					<div class="input-group">
+						<span class="input-group-btn" title="Choose the Apple Health export file to upload."> <label class="btn btn-primary" for="file-selector">
+								<span class="glyphicon glyphicon-file"></span>
+								<input id="file-selector" type="file" style="display: none;" name="file" />
+							</label>
+						</span>
+						<input type="text" class="form-control" placeholder="File to upload..." id="selected-file-name" readonly="readonly" />
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-default" disabled="disabled">Upload</button>
+						</span>
+					</div>
+				</div>
+				<div class="col-md-6"></div>
+			</div>
+		</form>
+		<!-- upload form end -->
+
+	</div>
+	<!-- container end -->
+
+	<script>
+		<!--/* 
+		Display the name of the file selected.
+		Only enable the upload button after a file is selected.
+		*/-->
+		$('#file-selector').change(function() {
+			$('#selected-file-name').val($(this).val().split('\\').pop());
+			$(':input[type="submit"]').prop('disabled', $(this).val() == null);
+		});
+	</script>
+</body>
+</html>
